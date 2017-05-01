@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/01 11:51:37 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/01 14:49:13 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct			s_ls_file
 {
 	char				*path;
 	char				*name;
-	t_stat				stat;
+	t_stat				statinfo;
 }						t_ls_file;
 
 #endif

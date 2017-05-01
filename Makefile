@@ -6,13 +6,13 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/30 21:27:44 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/01 15:21:24 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
 NAME		:= ft_ls
 CC		:= gcc
-CFLAGS		+= -Wall -Wextra -Werror
+#CFLAGS		+= -Wall -Wextra -Werror
 CFLAGS		+= -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
 
