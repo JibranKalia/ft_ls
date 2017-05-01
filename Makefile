@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/04/30 21:24:08 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/04/30 21:27:44 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ OBJ		:= $(SRC:.c=.o)
 
 .PHONY = all clean fclean clean re
 
-all: $(NAME) socket
+all: $(NAME)
 
 $(LIBFT):
 	@make -C libft	

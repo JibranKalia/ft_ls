@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/04/30 21:26:33 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/04/30 21:48:03 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <dirent.h>
 # include <time.h>
 # include <sys/xattr.h>
+
+typedef struct dirent t_dir;
 
 
 #endif
