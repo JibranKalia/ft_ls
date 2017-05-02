@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/01 18:44:11 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/01 20:23:16 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ int8_t		ft_ls_get_dir(t_arr *files, char *path)
 int8_t		ft_ls_print_dir(char *path)
 {
 	t_arr		*files;
-	int			chk;
 	size_t		i;
 	t_ls_file	**tmp;
 
@@ -60,13 +59,17 @@ int8_t		ft_ls_print_dir(char *path)
 	files = arr_create(sizeof(t_ls_file), 100);
 	CHECK(files == NULL, RETURN(-1), "Array Create Failed");
 	files->del = &file_del;
-	chk = ft_ls_get_dir(files, path);
-	CHECK1((chk == -1 || files->end == 0), arr_del(files), RETURN (-1), "Get Dir Failed");
-	arr_qsort(files, testcmp);
+	if (ft_ls_get_dir(files, path) == -1)
+	{
+		ft_dprintf(2, "ls: %s: %s\n", ls_pathname(path), strerror(errno));
+		arr_del(files);
+		return (-1);
+	}
+	CHECK1(files->end == 0), arr_del(files), RETURN (-1), "Get Dir Failed");
+	//arr_qsort(files, testcmp);
 	tmp = (t_ls_file **)files->contents;
 	while (i < files->end)
 		printf("%s\n", tmp[i++]->name);
 	arr_del(files);
 	return (0);
 }
-
