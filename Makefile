@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/05/01 16:20:08 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/05/01 17:11:51 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,9 +18,9 @@ LDFLAGS		:= -L libft/ -lft
 
 LIBFT		:= libft/libft.a
 
-FILES		:= ls_main
+FILES		:= ls_main ls_print_dir ls_extra
 SRC		+= $(addprefix src/, $(addsuffix .c, $(FILES)))
-SRC		+= alloc_wrap.c
+#SRC		+= alloc_wrap.c
 OBJ		:= $(SRC:.c=.o)
 
 .PHONY = all clean fclean clean re
