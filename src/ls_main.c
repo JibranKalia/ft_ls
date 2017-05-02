@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:24:20 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/01 16:13:23 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/01 16:45:10 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,15 @@ int8_t		ft_ls_print_dir(char *path)
 
 	i = 0;
 	files = arr_create(sizeof(t_ls_file), 100);
+	files->del = &file_del;
 	CHECK(files == NULL, RETURN(-1), "Array Create Failed");
 	chk = ft_ls_get_dir(files, path);
 	CHECK1((chk == -1 || files->end == 0), arr_del(files), RETURN (-1), "Get Dir Failed");
 	tmp = (t_ls_file **)files->contents;
 	while (i < files->end)
 		printf("%s\n", tmp[i++]->name);
+	i = -1;
+	arr_del(files);
 	return (0);
 }
 
