@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:41 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/01 17:10:53 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/01 17:48:01 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,12 @@ void		file_del(void	*elm)
 	free(((t_ls_file *)elm)->name);
 	free(((t_ls_file *)elm)->path);
 	ft_bzero(elm, sizeof(t_ls_file));
+}
+
+int8_t		ls_usage(char flag)
+{
+	ft_dprintf(2 , "ls: illegal option -- %c\n", flag);
+	ft_dprintf(STDOUT_FILENO, "usage: ft_ls [-Ralrt] [file ...]\n");
+	//ft_dprintf(2 ,"usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
+	return (-1);
 }
