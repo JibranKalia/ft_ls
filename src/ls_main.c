@@ -6,14 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:24:20 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/01 18:05:53 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/01 18:35:45 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
 uint8_t			g_ls_flags = 0;
-
 
 static int8_t	handle_flag(int c)
 {

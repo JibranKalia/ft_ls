@@ -6,13 +6,23 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/01 17:12:40 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/01 18:44:11 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
 extern int8_t	g_ls_flags;
+
+int testcmp (const void *a, const void *b)
+{
+	char *pa;
+	char *pb;
+
+	pa = (char*)a;
+	pb = (char*)b;
+	return (ft_strcmp(pa, pb));
+}
 
 int8_t		ft_ls_get_dir(t_arr *files, char *path)
 {
@@ -52,6 +62,7 @@ int8_t		ft_ls_print_dir(char *path)
 	files->del = &file_del;
 	chk = ft_ls_get_dir(files, path);
 	CHECK1((chk == -1 || files->end == 0), arr_del(files), RETURN (-1), "Get Dir Failed");
+	arr_qsort(files, testcmp);
 	tmp = (t_ls_file **)files->contents;
 	while (i < files->end)
 		printf("%s\n", tmp[i++]->name);
