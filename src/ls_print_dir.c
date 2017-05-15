@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/14 22:57:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/14 23:14:13 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,31 @@ int8_t		ft_ls_get_dir(t_arr *files, char *path)
 		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
 		tmp->name = ft_strdup(dp->d_name);
 		chk = lstat(tmp->path, &tmp->statinfo);
-		CHECK2(chk == -1, file_del(&tmp), closedir(dirp), RETURN(-1), "Lstat Failed");
+		CHECK1(chk == -1, closedir(dirp), RETURN(-1), "Lstat Failed");
 		arr_push(files, tmp);
 	}
 	closedir(dirp);
 	return (0);
 }
 
-int8_t		ft_ls_print_dir(char *path)
+static inline void	ft_ls_recursive(t_arr *files)
+{
+	int i;
+
+	i = -1;
+	while (++i < files->end)
+	{
+		if (S_ISDIR(((t_ls_file *)files->contents[i])->statinfo.st_mode)
+				&& !(ft_strcmp(((t_ls_file *)files->contents[i])->name, ".") == 0
+					|| ft_strcmp(((t_ls_file *)files->contents[i])->name, "..") == 0))
+		{
+			ft_printf("\n%s:\n", ((t_ls_file *)files->contents[i])->path);
+			ft_ls_print_dir(((t_ls_file *)files->contents[i])->path);
+		}
+	}
+}
+
+int8_t			ft_ls_print_dir(char *path)
 {
 	t_arr		*files;
 	size_t		i;
@@ -74,11 +91,13 @@ int8_t		ft_ls_print_dir(char *path)
 		return (-1);
 	}
 	CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
-	DEBUG("QSORT ON");
+//	DEBUG("QSORT ON");
 	arr_qsort(files, testcmp);
 	tmp = (t_ls_file **)files->contents;
 	while (i < files->end)
 		printf("%s\n", tmp[i++]->name);
-	arr_del(files);
+	if (g_ls_flags & FLG_R)
+		ft_ls_recursive(files);
+	//arr_del(files);
 	return (0);
 }
