@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/18 20:26:24 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/18 20:51:32 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,6 @@ int8_t			ft_ls_print_dir(char *path)
 	size_t		i;
 	t_ls_file	**tmp;
 
-	i = 0;
 	files = arr_create(sizeof(t_ls_file), 100);
 	CHECK(files == NULL, RETURN(-1), "Array Create Failed");
 	files->del = file_del;
@@ -87,11 +86,17 @@ int8_t			ft_ls_print_dir(char *path)
 		return (-1);
 	}
 	CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
-	ls_sort(files);
 	tmp = (t_ls_file **)files->contents;
-	while (i < files->end)
+	i = -1;
+	DEBUG("BEFORE SORT");
+	while (++i < files->end)
+		ft_printf("%s\n", tmp[i]->name);
+	ls_sort(files);
+	i = -1;
+	DEBUG("AFTER SORT");
+	while (++i < files->end)
 	{
-		ft_printf("NAME = %s\n", tmp[i++]->name);
+		ft_printf("%s\n", tmp[i]->name);
 //		ft_printf("PATH = %s\n", tmp[i++]->path);
 	}
 	if (g_ls_flags & FLG_R)
