@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/14 23:11:49 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/18 20:27:44 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,5 @@ typedef struct			s_ls_file
 void					file_del(void	*elm);
 int8_t					ft_ls_print_dir(char *path);
 int8_t					ls_usage(char flag);
+void				ls_sort(t_arr *files);
 #endif

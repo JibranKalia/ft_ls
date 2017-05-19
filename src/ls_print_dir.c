@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/18 20:01:21 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/18 20:26:24 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,6 @@ char	*ls_basename(char *path)
 	return (name);
 }
 
-int testcmp(const void *a, const void *b)
-{
-	return (ft_strcmp(((t_ls_file *)(a))->path, ((t_ls_file *)(b))->path));
-}
-
 int8_t		ft_ls_get_dir(t_arr *files, char *path)
 {
 	t_dir		*dp;
@@ -45,12 +40,13 @@ int8_t		ft_ls_get_dir(t_arr *files, char *path)
 	{
 		if (dp->d_name[0] == '.' && !(g_ls_flags & FLG_a))
 			continue ;
+		
 		tmp = ft_memalloc(sizeof(t_ls_file));
 		CHECK1(tmp == NULL, closedir(dirp), RETURN(-1), "Malloc Failed");
 		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
 		tmp->name = ft_strdup(dp->d_name);
 		chk = lstat(tmp->path, &tmp->statinfo);
-		CHECK1(chk == -1, closedir(dirp), RETURN(-1), "Lstat Failed");
+		CHECK2(chk == -1, closedir(dirp), arr_del(files), RETURN(-1), "Lstat Failed");
 		arr_push(files, tmp);
 	}
 	closedir(dirp);
@@ -90,12 +86,14 @@ int8_t			ft_ls_print_dir(char *path)
 		arr_del(files);
 		return (-1);
 	}
-	//CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
-//	DEBUG("QSORT ON");
-	arr_qsort(files, testcmp);
+	CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
+	ls_sort(files);
 	tmp = (t_ls_file **)files->contents;
 	while (i < files->end)
-		printf("%s\n", tmp[i++]->name);
+	{
+		ft_printf("NAME = %s\n", tmp[i++]->name);
+//		ft_printf("PATH = %s\n", tmp[i++]->path);
+	}
 	if (g_ls_flags & FLG_R)
 		ft_ls_recursive(files);
 	arr_del(files);

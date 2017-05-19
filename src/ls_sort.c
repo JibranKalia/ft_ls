@@ -1,31 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_extra.c                                         :+:      :+:    :+:   */
+/*   ls_sort.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/01 17:09:41 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/18 20:17:42 by jkalia           ###   ########.fr       */
+/*   Created: 2017/05/18 20:24:36 by jkalia            #+#    #+#             */
+/*   Updated: 2017/05/18 20:30:52 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-void		file_del(void *elm)
+static int	lexcmp(const void *a, const void *b)
 {
-	if (elm == 0)
-		return ;
-
-	free(((t_ls_file *)elm)->name);
-	free(((t_ls_file *)elm)->path);
-	ft_bzero(elm, sizeof(t_ls_file));
+	return (ft_strcmp(((t_ls_file *)(a))->path, ((t_ls_file *)(b))->path));
 }
 
-int8_t		ls_usage(char flag)
+void		ls_sort(t_arr *files)
 {
-	ft_dprintf(2 , "ls: illegal option -- %c\n", flag);
-	ft_dprintf(STDOUT_FILENO, "usage: ft_ls [-Ralrt] [file ...]\n");
-	//ft_dprintf(2 ,"usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
-	return (-1);
+	arr_qsort(files, lexcmp);
 }
