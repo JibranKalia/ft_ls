@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/18 20:51:32 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/18 21:19:29 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,9 +88,9 @@ int8_t			ft_ls_print_dir(char *path)
 	CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
 	tmp = (t_ls_file **)files->contents;
 	i = -1;
-	DEBUG("BEFORE SORT");
-	while (++i < files->end)
-		ft_printf("%s\n", tmp[i]->name);
+///	DEBUG("BEFORE SORT");
+//	while (++i < files->end)
+//		ft_printf("%s\n", tmp[i]->name);
 	ls_sort(files);
 	i = -1;
 	DEBUG("AFTER SORT");
