@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/14 23:14:13 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/05/18 20:01:21 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,14 +83,14 @@ int8_t			ft_ls_print_dir(char *path)
 	i = 0;
 	files = arr_create(sizeof(t_ls_file), 100);
 	CHECK(files == NULL, RETURN(-1), "Array Create Failed");
-	files->del = &file_del;
+	files->del = file_del;
 	if (ft_ls_get_dir(files, path) == -1)
 	{
 		ft_dprintf(2, "ls: %s: %s\n", ls_basename(path), strerror(errno));
 		arr_del(files);
 		return (-1);
 	}
-	CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
+	//CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
 //	DEBUG("QSORT ON");
 	arr_qsort(files, testcmp);
 	tmp = (t_ls_file **)files->contents;
@@ -98,6 +98,6 @@ int8_t			ft_ls_print_dir(char *path)
 		printf("%s\n", tmp[i++]->name);
 	if (g_ls_flags & FLG_R)
 		ft_ls_recursive(files);
-	//arr_del(files);
+	arr_del(files);
 	return (0);
 }
