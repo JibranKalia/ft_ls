@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:24:20 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/25 23:06:31 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/26 07:33:17 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,14 @@ static int8_t	handle_flag(int c)
 		return (ls_usage(c));
 	return (0);
 }
+int8_t		ft_ls_handle_args(int i, int argc, char **argv)
+{
+	(void)i;
+	(void)argc;
+	(void)argv;
+
+	return (0);
+}
 
 static int8_t	parse(int argc, char **argv)
 {
@@ -51,17 +59,15 @@ static int8_t	parse(int argc, char **argv)
 		}
 		++i;
 	}
-	//if (i < argc)
-	//	GRD(ft_ls_handle_args(i, argc, argv) == -1, -1);
-	//else
-	CHK(ft_ls_print_dir(".") == -1, -1);
+	if (i < argc)
+		CHK(ft_ls_handle_args(i, argc, argv) == -1, -1);
+	else
+		CHK(ft_ls_print_dir(".") == -1, -1);
 	return (0);
 }
 
 int				main(int argc, char **argv)
 {
-	int		chk;
-
 	if (argc == 1)
 	{
 		CHK(ft_ls_print_dir(".") == -1, -1);
