@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/18 21:34:55 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/25 23:26:51 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,8 @@ int8_t		ft_ls_get_dir(t_arr *files, char *path)
 	{
 		if (dp->d_name[0] == '.' && !(g_ls_flags & FLG_a))
 			continue ;
-		
 		tmp = ft_memalloc(sizeof(t_ls_file));
-		CHECK1(tmp == NULL, closedir(dirp), RETURN(-1), "Malloc Failed");
+		MEMCHECK1(tmp, closedir(dirp));
 		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
 		tmp->name = ft_strdup(dp->d_name);
 		chk = lstat(tmp->path, &tmp->statinfo);
@@ -50,6 +49,12 @@ int8_t		ft_ls_get_dir(t_arr *files, char *path)
 		arr_push(files, tmp);
 	}
 	closedir(dirp);
+	return (0);
+}
+
+int8_t			ft_ls_long(t_arr *files)
+{
+	(void)files;
 	return (0);
 }
 
@@ -73,11 +78,11 @@ static inline void	ft_ls_recursive(t_arr *files)
 int8_t			ft_ls_print_dir(char *path)
 {
 	t_arr		*files;
-	size_t		i;
+	int		i;
 	t_ls_file	**tmp;
 
 	files = arr_create(sizeof(t_ls_file), 5);
-	CHECK(files == NULL, RETURN(-1), "Array Create Failed");
+	MEMCHECK(files);
 	files->del = file_del;
 	if (ft_ls_get_dir(files, path) == -1)
 	{
@@ -88,17 +93,12 @@ int8_t			ft_ls_print_dir(char *path)
 	CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
 	tmp = (t_ls_file **)files->contents;
 	i = -1;
-///	DEBUG("BEFORE SORT");
-//	while (++i < files->end)
-//		ft_printf("%s\n", tmp[i]->name);
 	ls_sort(files);
-	i = -1;
-//	DEBUG("AFTER SORT");
-	while (++i < files->end)
-	{
-		ft_printf("%s\n", tmp[i]->name);
-//		ft_printf("PATH = %s\n", tmp[i++]->path);
-	}
+	if (g_ls_flags & FLG_l)
+		ft_ls_long(files);
+	else
+		while (++i < files->end)
+			ft_printf("%s\n", tmp[i]->name);
 	if (g_ls_flags & FLG_R)
 		ft_ls_recursive(files);
 	arr_del(files);

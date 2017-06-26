@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:41 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/18 20:17:42 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/25 23:12:03 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void		file_del(void *elm)
 {
 	if (elm == 0)
 		return ;
-
 	free(((t_ls_file *)elm)->name);
 	free(((t_ls_file *)elm)->path);
 	ft_bzero(elm, sizeof(t_ls_file));
