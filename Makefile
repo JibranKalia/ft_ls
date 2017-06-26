@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/06/25 23:23:24 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/06/26 08:19:55 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ LDFLAGS		:= -L libft/ -lft
 
 LIBFT		:= libft/libft.a
 
-FILES		+= ls_main ls_print_dir ls_extra ls_sort
+FILES		+= ls_main ls_print_dir ls_extra ls_sort ls_long
 #FILES		+= alloc_wrap
 SRC		+= $(addprefix src/, $(addsuffix .c, $(FILES)))
 OBJ		:= $(SRC:.c=.o)

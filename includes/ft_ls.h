@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/05/18 20:27:44 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/26 08:20:22 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,5 @@ void					file_del(void	*elm);
 int8_t					ft_ls_print_dir(char *path);
 int8_t					ls_usage(char flag);
 void				ls_sort(t_arr *files);
+int8_t			ft_ls_l(t_arr *files);
 #endif
