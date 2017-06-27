@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/26 08:37:27 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/27 04:08:25 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,22 @@ static int8_t		print_permission(mode_t mode)
 	return (0);
 }
 
+static int8_t		print_time(t_ls_file *file)
+{
+	time_t		out_time;
+	//time_t		curr_time;
+	char		*tmp;
+
+	out_time = file->statinfo.st_atime;
+	tmp = ctime(&out_time);
+	ft_printf("%5.4s %2.2s %4.4s", &tmp[4], &tmp[8], &tmp[12]);
+	return (0);
+}
+
 static int8_t		print_long(t_ls_file *file)
 {
 	struct passwd *pwd;
+	struct group *group;
 
 
 	print_mode(file->statinfo.st_mode);
@@ -60,7 +73,11 @@ static int8_t		print_long(t_ls_file *file)
 	ft_printf("%*d", 3, file->statinfo.st_nlink);
 	if ((pwd = getpwuid(file->statinfo.st_uid)) != NULL)
 		ft_printf("%*s", 13, pwd->pw_name);
-
+	if ((group = getgrgid(file->statinfo.st_gid)) != NULL)
+		ft_printf("%*s", 6, group->gr_name);
+	ft_printf("%*lld", 7, file->statinfo.st_size);
+	print_time(file);
+	ft_printf(" %s", file->name);
 	return (0);
 }
 
