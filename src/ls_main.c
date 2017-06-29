@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:24:20 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 09:07:48 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 09:47:07 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,16 +57,16 @@ static int8_t	parse(int argc, char **argv)
 		++i;
 	}
 	if (i < argc)
-		CHK(ft_ls_handle_args(i, argc, argv) == -1, -1);
+		CHK(ls_handle_args(i, argc, argv) == -1, -1);
 	else
-		CHK(ft_ls_print_dir(".") == -1, -1);
+		CHK(ls_print_dir(".") == -1, -1);
 	return (0);
 }
 
 int				main(int argc, char **argv)
 {
 	if (argc == 1)
-		CHK(ft_ls_print_dir(".") == -1, -1);
+		CHK(ls_print_dir(".") == -1, -1);
 	else if (argc > 1)
 		CHK(parse(argc, argv) == -1, -1);
 	else

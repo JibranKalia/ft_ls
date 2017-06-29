@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 06:45:24 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 09:46:30 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ static int8_t	print_long(t_ls_file *file, int *padding)
 	return (0);
 }
 
-int8_t			ft_ls_l(t_arr *files)
+int8_t			ls_l(t_arr *files)
 {
 	int		i;
 	int		blocks;

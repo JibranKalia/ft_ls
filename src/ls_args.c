@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 09:40:54 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 09:47:29 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 extern int8_t	g_ls_flags;
 
-int8_t		ls_handle_args(int i, int argc, char **argv)
+static int8_t	handle_files(t_arr *fil)
+{
+
+	return (0);
+}
+
+int8_t			ls_handle_args(int i, int argc, char **argv)
 {
 	t_arr			*naf;
 	t_arr			*dir;
@@ -46,6 +52,7 @@ int8_t		ls_handle_args(int i, int argc, char **argv)
 			arr_push(fil, tmp);
 		}
 	}
+	handle_files(fil);
 	arr_destroy(dir);
 	arr_destroy(naf);
 	arr_destroy(fil);
