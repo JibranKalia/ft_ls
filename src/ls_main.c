@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:24:20 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/26 08:18:34 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 07:11:24 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@ static int8_t	handle_flag(int c)
 		g_ls_flags |= FLG_r;
 	else if (c == 't')
 		g_ls_flags |= FLG_t;
+	else if (c == 'T')
+		g_ls_flags |= FLG_T;
+	else if (c == 'f')
+		g_ls_flags |= (FLG_f | FLG_a);
 	else if (c == '1')
 		;
 	else

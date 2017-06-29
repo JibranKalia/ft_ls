@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:41 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/25 23:12:03 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 06:40:21 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,4 +27,12 @@ int8_t		ls_usage(char flag)
 	ft_dprintf(STDOUT_FILENO, "usage: ft_ls [-Ralrt] [file ...]\n");
 	//ft_dprintf(2 ,"usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
 	return (-1);
+}
+
+void		find_padding(int *padding, t_stat statinfo)
+{
+	padding[0] = MAX(padding[0], ft_nbrlen(statinfo.st_nlink));
+	padding[1] = MAX(padding[1], (int)ft_strlen(getpwuid(statinfo.st_uid)->pw_name));
+	padding[2] = MAX(padding[2], (int)ft_strlen(getgrgid(statinfo.st_gid)->gr_name));
+	padding[3] = MAX(padding[3], ft_nbrlen(statinfo.st_size));
 }
