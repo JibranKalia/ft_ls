@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 14:52:38 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 15:53:42 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ enum					e_ls_flags
 	FLG_r = 0x8,
 	FLG_t = 0x10,
 	FLG_T = 0x20,
-	FLG_f = 0x40
+	FLG_f = 0x40,
+	FLG_1 = 0x80
 };
 
 typedef struct			s_ls_file

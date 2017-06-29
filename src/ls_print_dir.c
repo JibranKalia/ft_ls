@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 14:59:37 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 15:54:47 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,11 @@ int8_t			ls_print_dir(char *path)
 	ls_sort(files);
 	if (g_ls_flags & FLG_l)
 		ls_l(files);
-	else
+	else if (g_ls_flags & FLG_1)
 		while (++i < files->end)
 			ft_printf("%s\n", tmp[i]->name);
 	if (g_ls_flags & FLG_R)
 		ls_recursive(files);
-	ls_print_col(files);
 	arr_del(files);
 	return (0);
 }
