@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/06/29 09:07:44 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/06/29 14:23:52 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ SRCDIR		:= src
 INCDIR		:= includes
 OBJEXT		:= o
 SRCEXT		:= c
-CFLAGS		+= -I includes/ -I libft/includes/
+CFLAGS		+= -g -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
 INC         := -I $(INCDIR)
 MAKEFLAGS	="-j $(grep -c ^processor /proc/cpuinfo)"
@@ -25,6 +25,7 @@ MAKEFLAGS	="-j $(grep -c ^processor /proc/cpuinfo)"
 LIBFT		:= libft/libft.a
 
 FILES		+= ls_main ls_print_dir ls_util ls_sort ls_long ls_args
+#FILES		+= alloc_wrap
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .$(SRCEXT), $(FILES)))
 OBJ			:= $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRC:.$(SRCEXT)=.$(OBJEXT)))
 
@@ -35,7 +36,7 @@ COUNTER		=	$(words $n)$(eval n := $(call increment,$n))
 
 .PHONY = all clean fclean clean re
 
-all: $(TARGET)
+all: $(LIBFT) $(TARGET)
 
 $(LIBFT):
 	@make -C libft
