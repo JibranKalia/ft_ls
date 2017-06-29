@@ -1,5 +1,6 @@
 alloc_wrap.c
 out*
+test*
 
 # Object files #
 ###################

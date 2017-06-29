@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 14:25:22 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 14:39:49 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,35 @@
 
 extern int8_t	g_ls_flags;
 
-static int8_t	handle_files(t_arr *fil)
+static void		handle_files(t_arr *fil)
 {
 	int		i;
 
 	i = -1;
 	while (++i < fil->end)
 	{
-			ft_printf("%s\n", ((t_ls_file *)fil)->name);
+			ft_printf("%s\n", ((t_ls_file *)fil->contents[i])->name);
 	}
+}
 
-	return (0);
+static void		handle_dir(t_arr *dir)
+{
+	int		i;
+
+	if (dir->end == 0)
+		return ;
+	if (dir->end == 1)
+	{
+		ls_print_dir(((t_ls_file *)dir->contents[0])->path);
+		return ;
+	}
+	i = -1;
+	while (++i < dir->end)
+	{
+		ft_printf("%s:\n", ((t_ls_file *)dir->contents[i])->name);
+		ls_print_dir(((t_ls_file *)dir->contents[i])->path);
+		write(1, "\n", 1);
+	}
 }
 
 static void		handle_naf(t_arr *naf)
@@ -57,25 +75,29 @@ int8_t			ls_handle_args(int i, int argc, char **argv)
 	while (++i < argc)
 	{
 		tmp = ft_memalloc(sizeof(t_ls_file));
-	MEMCHECK(tmp);
+		MEMCHECK(tmp);
 		tmp->path = ft_strdup(argv[i]);
 		tmp->name = ft_strdup(get_basename(argv[i]));
 		if (stat(argv[i], &tmp->statinfo) == -1)
 		{
+//			DEBUG("NAF");
 			arr_push(naf, tmp);
 			continue;
 		}
 		if (S_ISDIR(tmp->statinfo.st_mode))
 		{
+//			DEBUG("DIR");
 			arr_push(dir, tmp);
 		}
 		else
 		{
+//			DEBUG("FILE");
 			arr_push(fil, tmp);
 		}
 	}
-	//handle_files(fil);
 	handle_naf(naf);
+	handle_files(fil);
+	handle_dir(dir);
 	arr_del(dir);
 	arr_del(naf);
 	arr_del(fil);

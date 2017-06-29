@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 09:10:51 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 14:52:38 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,5 @@ int8_t					ls_l(t_arr *files);
 void					find_padding(int *padding, t_stat statinfo);
 char					*get_basename(char *path);
 int8_t					ls_handle_args(int i, int argc, char **argv);
+int8_t					ls_print_col(t_arr	*files);
 #endif
