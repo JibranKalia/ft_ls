@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 15:53:42 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 16:13:28 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/xattr.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+# include <sys/ioctl.h>
 # include <time.h>
 # include <uuid/uuid.h>
 
@@ -38,6 +39,17 @@ enum					e_ls_flags
 	FLG_f = 0x40,
 	FLG_1 = 0x80
 };
+
+typedef struct			s_col
+{
+	int					col;
+	int					row;
+	int					w_width;
+	int					max_len;
+	int					max_depth;
+	int					file_count;
+	struct winsize		w;
+}						t_col;
 
 typedef struct			s_ls_file
 {

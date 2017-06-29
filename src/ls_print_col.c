@@ -6,65 +6,60 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 14:40:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 15:52:45 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 16:23:19 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
-#include <sys/ioctl.h>
 
-typedef struct	s_col
+static void		get_col_info(t_ls_file **tmp, t_col *col)
 {
-	int					col;
-	int					row;
-	int					w_width;
-	int					max_len;
-	int					max_depth;
-	int					file_count;
-	struct	winsize		w;
-}				t_col;
+	int			i;
 
-int8_t			ls_print_col(t_arr	*files)
+	col->max_len = 0;
+	ioctl(STDOUT_FILENO, TIOCGWINSZ, &col->w);
+	i = -1;
+	while (++i < col->file_count)
+		col->max_len = MAX(col->max_len, (int)ft_strlen(tmp[i]->name));
+	++col->max_len;
+	col->w_width = col->w.ws_col;
+	col->col = (col->w_width / (col->max_len));
+	if (col->col == 0)
+		col->col = 1;
+	if ((col->max_len * col->file_count) < col->w_width)
+		col->col = col->file_count;
+	col->row = col->file_count / col->col;
+	if (col->file_count % col->col)
+		++col->row;
+	DEBUG("MAX LEN %d", col->max_len);
+	DEBUG("COL %d", col->col);
+	DEBUG("ROW %d", col->row);
+}
+
+int8_t			ls_print_col(t_arr *files)
 {
-	t_ls_file			**tmp;
-	t_col				col;
+	t_col				*col;
 	int					i;
 	int					j;
 	int					k;
 
-	ft_bzero(&col, sizeof(col));
-	col.file_count = files->end;
-	tmp = (t_ls_file **)files->contents;
-	col.max_len = 0;
+	col = ft_memalloc(sizeof(col));
+	col->file_count = files->end;
+	get_col_info((t_ls_file **)files->contents, col);
 	i = -1;
-	while (++i < files->end)
+	while (++i < col->row)
 	{
-		col.max_len = MAX(col.max_len, (int)ft_strlen(tmp[i]->name));
-	}
-	++col.max_len;
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &col.w);
-	col.w_width = col.w.ws_col;
-	col.col = MAX((col.w_width / (col.max_len)), 1);
-	if ((col.max_len * files->end) < col.w_width)
-		col.col = col.file_count;
-	col.row = col.file_count / col.col;
-	if (col.file_count % col.col)
-		++col.row;
-	i = 0;
-	while (i < col.row)
-	{
-		j = 0;
-		while (j < col.col)
+		j = -1;
+		while (++j < col->col)
 		{
-			k = col.row * j + i;
-			if (k >= col.file_count)
+			k = col->row * j + i;
+			if (k >= col->file_count)
 				break ;
-			ft_printf("%-*s", col.max_len, tmp[k]->name);
-			++j;
+			ft_printf("%-*s", col->max_len, ((t_ls_file*)files->contents[k])->name);
 		}
 		write(1, "\n", 1);
-		++i;
 	}
+	free(col);
 	return (0);
 }
 
