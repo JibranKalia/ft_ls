@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_extra.c                                         :+:      :+:    :+:   */
+/*   ls_util.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:41 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 09:06:17 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 09:38:42 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		find_padding(int *padding, t_stat statinfo)
 	padding[3] = MAX(padding[3], ft_nbrlen(statinfo.st_size));
 }
 
-char	*ls_basename(char *path)
+char	*get_basename(char *path)
 {
 	char *name;
 

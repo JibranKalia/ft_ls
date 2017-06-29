@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 09:06:26 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 09:10:18 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 extern int8_t	g_ls_flags;
 
 
-int8_t		ft_ls_get_dir(t_arr *files, char *path)
+int8_t		ls_get_dir(t_arr *files, char *path)
 {
 	t_dir		*dp;
 	t_ls_file	*tmp;
@@ -40,7 +40,7 @@ int8_t		ft_ls_get_dir(t_arr *files, char *path)
 	return (0);
 }
 
-static inline void	ft_ls_recursive(t_arr *files)
+static inline void	ls_recursive(t_arr *files)
 {
 	int i;
 
@@ -57,7 +57,7 @@ static inline void	ft_ls_recursive(t_arr *files)
 	}
 }
 
-int8_t			ft_ls_print_dir(char *path)
+int8_t			ls_print_dir(char *path)
 {
 	t_arr		*files;
 	int		i;
