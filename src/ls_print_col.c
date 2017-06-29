@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 14:40:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 16:32:18 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 16:42:12 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ int8_t			ls_print_col(t_arr *files)
 	int					k;
 
 	col = ft_memalloc(sizeof(t_col));
+	MEMCHECK(col);
 	col->file_count = files->end;
 	get_col_info((t_ls_file **)files->contents, col);
 	i = -1;
@@ -52,66 +53,11 @@ int8_t			ls_print_col(t_arr *files)
 			k = col->row * j + i;
 			if (k >= col->file_count)
 				break ;
-			ft_printf("%-*s", col->max_len, ((t_ls_file*)files->contents[k])->name);
+			ft_printf("%-*s", col->max_len,
+					((t_ls_file*)files->contents[k])->name);
 		}
 		write(1, "\n", 1);
 	}
 	free(col);
 	return (0);
 }
-
-/**
-void column_display(t_entries entries, int file_count, int max_file_len, int target)
-{
-	struct winsize w;
-	int cols;
-	int rows;
-	char **arr;
-	int term_width;
-	int i;
-	int pos;
-
-	ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-	term_width = w.ws_col;
-	cols = term_width / (max_file_len + 1);
-	if (!cols)
-		cols = 1;
-	if ((max_file_len + 1) * file_count < term_width)
-		cols = file_count;
-	rows = file_count / cols;
-	if (file_count % cols)
-		++rows;
-	arr = NULL;
-	if (target == IS_DIR)
-	{
-		MEMCHECK((arr = (char **)ft_memalloc(sizeof(char *) * (file_count + 1))));
-		i = 0;
-		while (entries.files)
-		{
-			if (entries.files->has_nonprintable_chars)
-				arr[i++] = ft_strdup(entries.files->display_name);
-			else
-				arr[i++] = ft_strdup(entries.files->name);
-			entries.files = entries.files->next;
-		}
-	}
-	pos = 0;
-	i = -1;
-	while (++i < rows)
-	{
-		int j = -1;
-		pos = i;
-		while (++j < cols)
-		{
-			lprint_handler(1, "%s ", max_file_len, target == IS_DIR ? arr[pos] : entries.file_names[pos]);
-			pos += rows;
-			if (pos >= file_count)
-				break;
-		}
-		print_handler(1, "\n", 0, NULL);
-	}
-	if (target == IS_DIR)
-		free(arr);
-}
-
-**/
