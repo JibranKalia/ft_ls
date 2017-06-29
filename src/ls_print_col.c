@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 14:40:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 16:23:19 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 16:32:18 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,6 @@ static void		get_col_info(t_ls_file **tmp, t_col *col)
 	col->row = col->file_count / col->col;
 	if (col->file_count % col->col)
 		++col->row;
-	DEBUG("MAX LEN %d", col->max_len);
-	DEBUG("COL %d", col->col);
-	DEBUG("ROW %d", col->row);
 }
 
 int8_t			ls_print_col(t_arr *files)
@@ -43,7 +40,7 @@ int8_t			ls_print_col(t_arr *files)
 	int					j;
 	int					k;
 
-	col = ft_memalloc(sizeof(col));
+	col = ft_memalloc(sizeof(t_col));
 	col->file_count = files->end;
 	get_col_info((t_ls_file **)files->contents, col);
 	i = -1;
