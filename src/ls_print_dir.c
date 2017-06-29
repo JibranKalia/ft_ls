@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 16:08:16 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/29 16:30:53 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int8_t			ls_print_dir(char *path)
 
 	files = arr_create(sizeof(t_ls_file), 5);
 	MEMCHECK(files);
-	files->del = file_del;
+	files->del = &file_del;
 	if (ls_get_dir(files, path) == -1)
 	{
 		ft_dprintf(2, "ls: %s: %s\n", get_basename(path), strerror(errno));
@@ -76,6 +76,8 @@ int8_t			ls_print_dir(char *path)
 	tmp = (t_ls_file **)files->contents;
 	i = -1;
 	ls_sort(files);
+	if (g_ls_flags & FLG_R)
+		ls_recursive(files);
 	if (g_ls_flags & FLG_l)
 		ls_l(files);
 	else if (g_ls_flags & FLG_1)
@@ -83,8 +85,6 @@ int8_t			ls_print_dir(char *path)
 			ft_printf("%s\n", tmp[i]->name);
 	else
 		ls_print_col(files);
-	if (g_ls_flags & FLG_R)
-		ls_recursive(files);
 	arr_del(files);
 	return (0);
 }
