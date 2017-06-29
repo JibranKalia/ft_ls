@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/06/29 07:24:34 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/06/29 09:07:44 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ MAKEFLAGS	="-j $(grep -c ^processor /proc/cpuinfo)"
 
 LIBFT		:= libft/libft.a
 
-FILES		+= ls_main ls_print_dir ls_extra ls_sort ls_long
+FILES		+= ls_main ls_print_dir ls_util ls_sort ls_long ls_args
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .$(SRCEXT), $(FILES)))
 OBJ			:= $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRC:.$(SRCEXT)=.$(OBJEXT)))
 
