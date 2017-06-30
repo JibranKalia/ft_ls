@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 08:22:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 08:31:23 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,32 @@
 
 extern int8_t	g_ls_flags;
 
+static void		print_custom_l(t_arr *fil)
+{
+	int		i;
+	int		padding[4];
+
+	ft_bzero(padding, sizeof(int) * 4);
+	i = -1;
+	while (++i < fil->end)
+		find_padding(padding, ((t_ls_file *)fil->contents[i])->statinfo);
+	i = -1;
+	while (++i < fil->end)
+	{
+		print_long((t_ls_file *)fil->contents[i], padding);
+		write(1, "\n", 1);
+	}
+	write(1, "\n", 1);
+}
+
 static void		handle_files(t_arr *fil)
 {
-	if (g_ls_flags & FLG_1)
+
+	if (fil->end > 0)
+		ls_sort(fil);
+	if (g_ls_flags & FLG_l)
+		print_custom_l(fil);
+	else if (g_ls_flags & FLG_1)
 		ls_print_simple(fil);
 	else
 		ls_print_col(fil);

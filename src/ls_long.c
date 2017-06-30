@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 08:15:04 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 08:26:30 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ static int8_t	print_time(t_ls_file *file)
 	return (0);
 }
 
-static int8_t	print_long(t_ls_file *file, int *padding)
+int8_t		print_long(t_ls_file *file, int *padding)
 {
 	struct passwd	*pwd;
 	struct group	*group;

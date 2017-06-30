@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 08:15:16 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 08:27:02 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int8_t					ls_print_dir(char *path);
 int8_t					ls_print_col(t_arr	*files);
 int8_t					ls_print_simple(t_arr *files);
 int8_t					ls_print_l(t_arr *files);
+int8_t					print_long(t_ls_file *file, int *padding);
 
 /*
 ** LS_UTIL
