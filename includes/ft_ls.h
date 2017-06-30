@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 08:27:02 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 09:26:56 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,23 @@ enum					e_ls_flags
 	FLG_t = 0x10,
 	FLG_T = 0x20,
 	FLG_f = 0x40,
-	FLG_1 = 0x80
+	FLG_1 = 0x80,
+	FLG_C = 0x100,
+	FLG_X = 0x200
 };
 
 typedef struct			s_col
 {
-	int					col;
-	int					row;
-	int					w_width;
+	int					numcol;
+	int					numrow;
+	int					termwidth;
+	int					tabwidth;
+	int					colwidth;
 	int					max_len;
 	int					max_depth;
 	int					file_count;
-	struct winsize		w;
+	int					sortacross;
+	struct winsize		win;
 }						t_col;
 
 typedef struct			s_ls_file
