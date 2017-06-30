@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 16:33:23 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 08:15:16 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,31 @@ typedef struct			s_ls_file
 	t_timespec			lstime;
 }						t_ls_file;
 
-void					file_del(void	*elm);
-int8_t					ls_print_dir(char *path);
-int8_t					ls_usage(char flag);
 void					ls_sort(t_arr *files);
-int8_t					ls_l(t_arr *files);
+
+
+
+/*
+** LS_ARGS
+*/
+
+int8_t					ls_handle_args(int i, int argc, char **argv);
+
+/*
+** LS_PRINT
+*/
+
+int8_t					ls_print_dir(char *path);
+int8_t					ls_print_col(t_arr	*files);
+int8_t					ls_print_simple(t_arr *files);
+int8_t					ls_print_l(t_arr *files);
+
+/*
+** LS_UTIL
+*/
+
 void					find_padding(int *padding, t_stat statinfo);
 char					*get_basename(char *path);
-int8_t					ls_handle_args(int i, int argc, char **argv);
-int8_t					ls_print_col(t_arr	*files);
+void					file_del(void	*elm);
+int8_t					ls_usage(char flag);
 #endif

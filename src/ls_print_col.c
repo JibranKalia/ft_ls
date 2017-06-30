@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 14:40:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 16:42:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 08:15:44 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,17 @@ int8_t			ls_print_col(t_arr *files)
 		write(1, "\n", 1);
 	}
 	free(col);
+	return (0);
+}
+
+int8_t				ls_print_simple(t_arr *files)
+{
+	t_ls_file	**tmp;
+	int			i;
+
+	tmp = (t_ls_file **)files->contents;
+	i = -1;
+	while (++i < files->end)
+		ft_printf("%s\n", tmp[i]->name);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 16:14:42 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 08:22:12 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,10 @@ extern int8_t	g_ls_flags;
 
 static void		handle_files(t_arr *fil)
 {
-	int		i;
-
-	i = -1;
-	while (++i < fil->end)
-	{
-			ft_printf("%s\n", ((t_ls_file *)fil->contents[i])->name);
-	}
+	if (g_ls_flags & FLG_1)
+		ls_print_simple(fil);
+	else
+		ls_print_col(fil);
 }
 
 static void		handle_dir(t_arr *dir)
@@ -36,12 +33,13 @@ static void		handle_dir(t_arr *dir)
 		ls_print_dir(((t_ls_file *)dir->contents[0])->path);
 		return ;
 	}
-	i = -1;
-	while (++i < dir->end)
+	i = 0;
+	while (i < dir->end)
 	{
 		ft_printf("%s:\n", ((t_ls_file *)dir->contents[i])->name);
 		ls_print_dir(((t_ls_file *)dir->contents[i])->path);
-		write(1, "\n", 1);
+		if ((++i) < dir->end)
+			write(1, "\n", 1);
 	}
 }
 
