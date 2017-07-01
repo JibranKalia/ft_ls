@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 20:16:14 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 07:00:29 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,64 @@ typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 typedef struct timespec	t_timespec;
 
-enum					e_ls_flags
+typedef struct			ls_flags
 {
-	FLG_l = 0x1,
-	FLG_R = 0x2,
-	FLG_a = 0x4,
-	FLG_r = 0x8,
-	FLG_t = 0x10,
-	FLG_T = 0x20,
-	FLG_f = 0x40,
-	FLG_1 = 0x80,
-	FLG_C = 0x100,
-	FLG_x = 0x200,
-	FLG_c = 0x400,
-	FLG_U = 0x800,
-	FLG_u = 0x1000
+	int f_l;
+	int f_R;
+	int f_a;
+	int f_r;
+	int f_t;
+	int f_T;
+	int f_f;
+	int f_1;
+	int f_C;
+	int f_x;
+	int f_c;
+	int f_U;
+	int f_u;
+
+	int f_singlecol;		/* use single column output */
+	int f_longform;		/* long listing format */
+	int f_sortacross;		/* sort across rows, not down columns */
+	int f_statustime;		/* use time of last mode change */
+	int f_accesstime;		/* use time of last access */
+	int f_birthtime;		/* use time of file birth */
+	int f_recursive;		/* ls subdirectories also */
+	int f_reversesort;	/* reverse whatever sort is used */
+	int f_listall;		/* list files beginning with . and .. */
+	int f_listdot;		/* list files beginning with . */
+	int f_nosort;		/* don't sort output */
+	int f_sizesort;		/* sort by size */
+	int f_sectime;		/* print the real time for all files */
+	int f_timesort;		/* sort by time vice name */
+	int f_notabs;		/* don't use tab-separated multi-col output */
+
+	int f_type;		/* add type character for non-regular files */
+	int f_slash;		/* similar to f_type, but only for dirs */
+	FjG_stream;		/* stream the output, separate with commas */
+	int f_color;
+	int f_humanval;		/* show human-readable file sizes */
+
+	/* Case Q */
+	int f_nonprint;		/* show unprintables as ? */
+	int f_octal;		/* show unprintables as \xxx */
+	int f_octal_escape;	/* like f_octal but use C escapes if possible */
+
+	/* Case e */
+	int f_acl;		/* show ACLs in long listing */
+
+	/* Case @ */
+	int f_xattr;		/* show extended attributes in long listing */
+
+	int f_flags;		/* show flags associated with a file */
+	int f_inode;		/* print inode */
+	int f_kblocks;		/* print size in kilobytes */
+	int f_listdir;		/* list actual directory, not contents */
+	int f_numericonly;	/* don't convert uid/gid to name */
+	int f_size;		/* list size in short listing */
+	int f_whiteout;		/* show whiteout entries */
+	int f_group;		/* show group */
+	int f_owner;		/* show owner */
 };
 
 typedef struct			s_col

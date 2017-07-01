@@ -6,13 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:24:20 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 05:59:58 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 06:31:19 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-int				g_ls_flags = 0;
+intmax_t				g_ls_flags = 0;
 
 static int8_t	handle_flag(int c)
 {
@@ -39,7 +39,7 @@ static int8_t	handle_flag(int c)
 	else if (c == 'c')
 		g_ls_flags |= FLG_c;
 	else if (c == 'U')
-		g_ls_flags != FLG_U;
+		g_ls_flags |= FLG_U;
 	else if (c == 'u')
 		g_ls_flags |= FLG_u;
 	else

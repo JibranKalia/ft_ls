@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 06:00:08 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 06:07:22 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 06:59:36 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,15 @@ int		main(int argc, char *argv[])
 	if (!getuid())
 		f_listdot = 1;
 
-	fts_options = FTS_PHYSICAL;
+	//fts_options = FTS_PHYSICAL;
+	//TODO: Use ft_getopt
 	while ((ch = getopt(argc, argv, "1@ABCFGHLOPRSTUWabcdefghiklmnopqrstuvwx")) 
 			!= -1) {
 		switch (ch) {
 			/*
-			 * 		 * The -1, -C, -x and -l options all override each other so
-			 * 		 		 * shell aliasing works right.
-			 * 		 		 		 */
+			* The -1, -C, -x and -l options all override each other so
+			* shell aliasing works right.
+			*/
 			case '1':
 				f_singlecol = 1;
 				f_longform = 0;
