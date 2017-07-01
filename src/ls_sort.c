@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 20:24:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 10:24:49 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 10:56:01 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,9 +84,10 @@ void			ls_sort(t_arr *files)
 		arr_reverse(files);
 }
 
+/**
 static int		ls_sort(void)
 {
-	/* Select a sort function. */
+	// Select a sort function.
 	if (g_ls_flg->reversesort)
 	{
 		if (g_ls_flg->sizesort)
@@ -99,7 +100,7 @@ static int		ls_sort(void)
 			sortfcn = revstatcmp;
 		else if (g_ls_flg->birthtime)
 			sortfcn = revbirthcmp;
-		else		/* Use modification time. */
+		else		// Use modification time.
 			sortfcn = revmodcmp;
 	}
 	else
@@ -114,10 +115,11 @@ static int		ls_sort(void)
 			sortfcn = statcmp;
 		else if (g_ls_flg->birthtime)
 			sortfcn = birthcmp;
-		else		/* Use modification time. */
+		else		// Use modification time.
 			sortfcn = modcmp;
 	}
 }
+**/
 
 
 /*
@@ -127,6 +129,7 @@ static int		ls_sort(void)
 * All other levels use the sort function.  Error entries remain unsorted.
 */
 
+/**
 static int		mastercmp(const FTSENT **a, const FTSENT **b)
 {
 	int a_info, b_info;
@@ -150,3 +153,4 @@ static int		mastercmp(const FTSENT **a, const FTSENT **b)
 	}
 	return (sortfcn(*a, *b));
 }
+**/

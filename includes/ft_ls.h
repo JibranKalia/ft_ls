@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 10:22:46 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 11:04:58 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,29 @@ typedef struct timespec	t_timespec;
 ** whiteout: show whiteout entries
 ** group: show group
 ** owner: show owner
+**
+** seedot:
+** nonprint:
 */
 
-typedef struct			s_ls_flags
+enum					e_ls_flags
+{
+	FLG_l = 0x1,
+	FLG_R = 0x2,
+	FLG_a = 0x4,
+	FLG_r = 0x8,
+	FLG_t = 0x10,
+	FLG_T = 0x20,
+	FLG_f = 0x40,
+	FLG_1 = 0x80,
+	FLG_C = 0x100,
+	FLG_x = 0x200,
+	FLG_c = 0x400,
+	FLG_U = 0x800,
+	FLG_u = 0x1000
+};
+
+typedef struct			s_ls_flg
 {
 	unsigned int singlecol:1;
 	unsigned int longform:1;
@@ -103,7 +123,10 @@ typedef struct			s_ls_flags
 	unsigned int whiteout:1;
 	unsigned int group:1;
 	unsigned int owner:1;
-}						t_ls_flags;
+	
+	unsigned int seedot:1;
+	unsigned int nonprint:1;
+}						t_ls_flg;
 
 typedef struct			s_col
 {
@@ -125,8 +148,7 @@ typedef struct			s_col
 typedef struct			s_ls_data
 {
 	long				blocksize;
-
-}						t_ls_data
+}						t_ls_data;
 
 typedef struct			s_ls_file
 {
