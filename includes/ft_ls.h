@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/30 21:25:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 07:00:29 by jkalia           ###   ########.fr       */
+/*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
+/*   Updated: 2017/07/01 07:23:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,65 +28,82 @@ typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 typedef struct timespec	t_timespec;
 
-typedef struct			ls_flags
+/*
+** f_singlecol: use single column output
+** f_longform: long listing format
+** f_sortacross: sort across rows, not down columns
+** f_statustime: use time of last mode change
+** f_accesstime: use time of last access
+** f_birthtime: use time of file birth
+** f_recursive: ls subdirectories also
+** f_reversesort: reverse whatever sort is used
+** f_listall: list files beginning with . and ..
+** f_listdot: list files beginning with .
+** f_nosort: don't sort output
+** f_sizesort: sort by size
+** f_sectime: pr*the real time for all files
+** f_timesort: sort by time vice name
+** f_notabs: don't use tab-separated multi-col output
+**
+** f_type: add type character for non-regular files
+** f_slash: similar to f_type, but only for dirs
+** f_stream: stream the output, separate with commas
+** f_color:1;
+** f_humanval: show human-readable file sizes
+**
+** Case e
+** f_acl: show ACLs in long listing
+**
+** Case @
+** f_xattr: show extended attributes in long listing
+**
+** f_flags: show flags associated with a file
+** f_inode: pr*inode
+** f_kblocks: pr*size in kilobytes
+** f_listdir: list actual directory, not contents
+** f_numericonly: don't convert uid/gid to name
+** f_size: list size in short listing
+** f_whiteout: show whiteout entries
+** f_group: show group
+** f_owner: show owner
+*/
+
+typedef struct			s_ls_flags
 {
-	int f_l;
-	int f_R;
-	int f_a;
-	int f_r;
-	int f_t;
-	int f_T;
-	int f_f;
-	int f_1;
-	int f_C;
-	int f_x;
-	int f_c;
-	int f_U;
-	int f_u;
+	unsigned int f_singlecol:1;
+	unsigned int f_longform:1;
+	unsigned int f_sortacross:1;
+	unsigned int f_statustime:1;
+	unsigned int f_accesstime:1;
+	unsigned int f_birthtime:1;
+	unsigned int f_recursive:1;
+	unsigned int f_reversesort:1;
+	unsigned int f_listall:1;
+	unsigned int f_listdot:1;
+	unsigned int f_nosort:1;
+	unsigned int f_sizesort:1;
+	unsigned int f_sectime:1;
+	unsigned int f_timesort:1;
+	unsigned int f_notabs:1;
 
-	int f_singlecol;		/* use single column output */
-	int f_longform;		/* long listing format */
-	int f_sortacross;		/* sort across rows, not down columns */
-	int f_statustime;		/* use time of last mode change */
-	int f_accesstime;		/* use time of last access */
-	int f_birthtime;		/* use time of file birth */
-	int f_recursive;		/* ls subdirectories also */
-	int f_reversesort;	/* reverse whatever sort is used */
-	int f_listall;		/* list files beginning with . and .. */
-	int f_listdot;		/* list files beginning with . */
-	int f_nosort;		/* don't sort output */
-	int f_sizesort;		/* sort by size */
-	int f_sectime;		/* print the real time for all files */
-	int f_timesort;		/* sort by time vice name */
-	int f_notabs;		/* don't use tab-separated multi-col output */
+	unsigned int f_type:1;
+	unsigned int f_slash:1;
+	unsigned int f_stream:1;
+	unsigned int f_color:1;
+	unsigned int f_humanval:1;
+	unsigned int f_acl:1;
+	unsigned int f_xattr:1;
 
-	int f_type;		/* add type character for non-regular files */
-	int f_slash;		/* similar to f_type, but only for dirs */
-	FjG_stream;		/* stream the output, separate with commas */
-	int f_color;
-	int f_humanval;		/* show human-readable file sizes */
-
-	/* Case Q */
-	int f_nonprint;		/* show unprintables as ? */
-	int f_octal;		/* show unprintables as \xxx */
-	int f_octal_escape;	/* like f_octal but use C escapes if possible */
-
-	/* Case e */
-	int f_acl;		/* show ACLs in long listing */
-
-	/* Case @ */
-	int f_xattr;		/* show extended attributes in long listing */
-
-	int f_flags;		/* show flags associated with a file */
-	int f_inode;		/* print inode */
-	int f_kblocks;		/* print size in kilobytes */
-	int f_listdir;		/* list actual directory, not contents */
-	int f_numericonly;	/* don't convert uid/gid to name */
-	int f_size;		/* list size in short listing */
-	int f_whiteout;		/* show whiteout entries */
-	int f_group;		/* show group */
-	int f_owner;		/* show owner */
-};
+	unsigned int f_flags:1;
+	unsigned int f_inode:1;
+	unsigned int f_kblocks:1;
+	unsigned int f_listdir:1;
+	unsigned int f_numericonly:1;
+	unsigned int f_size:1;
+	unsigned int f_whiteout:1;
+	unsigned int f_group:1;
+	unsigned int f_owner:1;
+}						t_ls_flags;
 
 typedef struct			s_col
 {
@@ -114,8 +131,6 @@ typedef struct			s_ls_file
 }						t_ls_file;
 
 void					ls_sort(t_arr *files);
-
-
 
 /*
 ** LS_ARGS

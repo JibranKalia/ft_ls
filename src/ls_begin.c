@@ -50,7 +50,7 @@ int		main(int argc, char *argv[])
 
 	//fts_options = FTS_PHYSICAL;
 	//TODO: Use ft_getopt
-	while ((ch = getopt(argc, argv, "1@ABCFGHLOPRSTUWabcdefghiklmnopqrstuvwx")) 
+	while ((ch = getopt(argc, argv, "1@ABCFGHLOPRSTUWabcdefghiklmnopqrstuvwx"))
 			!= -1) {
 		switch (ch) {
 			/*
