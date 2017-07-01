@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 20:24:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 20:16:36 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 10:24:49 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,71 @@ void			ls_sort(t_arr *files)
 		ft_qsort(files->contents, 0, ARR_COUNT(files) - 1, ls_lexcmp);
 	if (g_ls_flags & FLG_r)
 		arr_reverse(files);
+}
+
+static int		ls_sort(void)
+{
+	/* Select a sort function. */
+	if (g_ls_flg->reversesort)
+	{
+		if (g_ls_flg->sizesort)
+			sortfcn = revsizecmp;
+		else if (!g_ls_flg->timesort)
+			sortfcn = revnamecmp;
+		else if (g_ls_flg->accesstime)
+			sortfcn = revacccmp;
+		else if (g_ls_flg->statustime)
+			sortfcn = revstatcmp;
+		else if (g_ls_flg->birthtime)
+			sortfcn = revbirthcmp;
+		else		/* Use modification time. */
+			sortfcn = revmodcmp;
+	}
+	else
+	{
+		if (g_ls_flg->sizesort)
+			sortfcn = sizecmp;
+		else if (!g_ls_flg->timesort)
+			sortfcn = namecmp;
+		else if (g_ls_flg->accesstime)
+			sortfcn = acccmp;
+		else if (g_ls_flg->statustime)
+			sortfcn = statcmp;
+		else if (g_ls_flg->birthtime)
+			sortfcn = birthcmp;
+		else		/* Use modification time. */
+			sortfcn = modcmp;
+	}
+}
+
+
+/*
+* Ordering for mastercmp:
+* If ordering the argv (fts_level = FTS_ROOTLEVEL) return non-directories
+* as larger than directories.  Within either group, use the sort function.
+* All other levels use the sort function.  Error entries remain unsorted.
+*/
+
+static int		mastercmp(const FTSENT **a, const FTSENT **b)
+{
+	int a_info, b_info;
+
+	a_info = (*a)->fts_info;
+	if (a_info == FTS_ERR)
+		return (0);
+	b_info = (*b)->fts_info;
+	if (b_info == FTS_ERR)
+		return (0);
+
+	if (a_info == FTS_NS || b_info == FTS_NS)
+		return (namecmp(*a, *b));
+
+	if (a_info != b_info &&
+			(*a)->fts_level == FTS_ROOTLEVEL && !f_listdir) {
+		if (a_info == FTS_D)
+			return (1);
+		if (b_info == FTS_D)
+			return (-1);
+	}
+	return (sortfcn(*a, *b));
 }

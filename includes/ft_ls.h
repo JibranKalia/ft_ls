@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 09:45:44 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 10:22:46 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,80 +29,80 @@ typedef struct stat		t_stat;
 typedef struct timespec	t_timespec;
 
 /*
-** f_singlecol: use single column output
-** f_longform: long listing format
-** f_sortacross: sort across rows, not down columns
-** f_statustime: use time of last mode change
-** f_accesstime: use time of last access
-** f_birthtime: use time of file birth
-** f_recursive: ls subdirectories also
-** f_reversesort: reverse whatever sort is used
-** f_listall: list files beginning with . and ..
-** f_listdot: list files beginning with .
-** f_nosort: don't sort output
-** f_sizesort: sort by size
-** f_sectime: pr*the real time for all files
-** f_timesort: sort by time vice name
-** f_notabs: don't use tab-separated multi-col output
+** singlecol: use single column output
+** longform: long listing format
+** sortacross: sort across rows, not down columns
+** statustime: use time of last mode change
+** accesstime: use time of last access
+** birthtime: use time of file birth
+** recursive: ls subdirectories also
+** reversesort: reverse whatever sort is used
+** listall: list files beginning with . and ..
+** listdot: list files beginning with .
+** nosort: don't sort output
+** sizesort: sort by size
+** sectime: pr*the real time for all files
+** timesort: sort by time vice name
+** notabs: don't use tab-separated multi-col output
 **
-** f_type: add type character for non-regular files
-** f_slash: similar to f_type, but only for dirs
-** f_stream: stream the output, separate with commas
-** f_color:1;
-** f_humanval: show human-readable file sizes
+** type: add type character for non-regular files
+** slash: similar to type, but only for dirs
+** stream: stream the output, separate with commas
+** color:1;
+** humanval: show human-readable file sizes
 **
 ** Case e
-** f_acl: show ACLs in long listing
+** acl: show ACLs in long listing
 **
 ** Case @
-** f_xattr: show extended attributes in long listing
+** xattr: show extended attributes in long listing
 **
-** f_flags: show flags associated with a file
-** f_inode: pr*inode
-** f_kblocks: pr*size in kilobytes
-** f_listdir: list actual directory, not contents
-** f_numericonly: don't convert uid/gid to name
-** f_size: list size in short listing
-** f_whiteout: show whiteout entries
-** f_group: show group
-** f_owner: show owner
+** flags: show flags associated with a file
+** inode: pr*inode
+** kblocks: pr*size in kilobytes
+** listdir: list actual directory, not contents
+** numericonly: don't convert uid/gid to name
+** size: list size in short listing
+** whiteout: show whiteout entries
+** group: show group
+** owner: show owner
 */
 
 typedef struct			s_ls_flags
 {
-	unsigned int f_singlecol:1;
-	unsigned int f_longform:1;
-	unsigned int f_sortacross:1;
-	unsigned int f_statustime:1;
-	unsigned int f_accesstime:1;
-	unsigned int f_birthtime:1;
-	unsigned int f_recursive:1;
-	unsigned int f_reversesort:1;
-	unsigned int f_listall:1;
-	unsigned int f_listdot:1;
-	unsigned int f_nosort:1;
-	unsigned int f_sizesort:1;
-	unsigned int f_sectime:1;
-	unsigned int f_timesort:1;
-	unsigned int f_notabs:1;
+	unsigned int singlecol:1;
+	unsigned int longform:1;
+	unsigned int sortacross:1;
+	unsigned int statustime:1;
+	unsigned int accesstime:1;
+	unsigned int birthtime:1;
+	unsigned int recursive:1;
+	unsigned int reversesort:1;
+	unsigned int listall:1;
+	unsigned int listdot:1;
+	unsigned int nosort:1;
+	unsigned int sizesort:1;
+	unsigned int sectime:1;
+	unsigned int timesort:1;
+	unsigned int notabs:1;
 
-	unsigned int f_type:1;
-	unsigned int f_slash:1;
-	unsigned int f_stream:1;
-	unsigned int f_color:1;
-	unsigned int f_humanval:1;
-	unsigned int f_acl:1;
-	unsigned int f_xattr:1;
+	unsigned int type:1;
+	unsigned int slash:1;
+	unsigned int stream:1;
+	unsigned int color:1;
+	unsigned int humanval:1;
+	unsigned int acl:1;
+	unsigned int xattr:1;
 
-	unsigned int f_flags:1;
-	unsigned int f_inode:1;
-	unsigned int f_kblocks:1;
-	unsigned int f_listdir:1;
-	unsigned int f_numericonly:1;
-	unsigned int f_size:1;
-	unsigned int f_whiteout:1;
-	unsigned int f_group:1;
-	unsigned int f_owner:1;
+	unsigned int flags:1;
+	unsigned int inode:1;
+	unsigned int kblocks:1;
+	unsigned int listdir:1;
+	unsigned int numericonly:1;
+	unsigned int size:1;
+	unsigned int whiteout:1;
+	unsigned int group:1;
+	unsigned int owner:1;
 }						t_ls_flags;
 
 typedef struct			s_col
@@ -122,9 +122,11 @@ typedef struct			s_col
 	struct winsize		win;
 }						t_col;
 
-typedef struct			s_ls_main
+typedef struct			s_ls_data
 {
-}						t_ls_main
+	long				blocksize;
+
+}						t_ls_data
 
 typedef struct			s_ls_file
 {
