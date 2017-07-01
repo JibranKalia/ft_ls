@@ -6,49 +6,17 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 06:00:08 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 06:59:36 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 09:45:42 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+t_ls_main		main;
+t_ls_flags		g_ls_flags;
 
-int		main(int argc, char *argv[])
+int		main(int argc, char **argv)
 {
-	static char dot[] = ".", *dotav[] = {dot, NULL};
-	struct winsize win;
-	int ch, fts_options, notused;
-	char *p;
-#ifdef COLORLS
-	char termcapbuf[1024];	/* termcap definition buffer */
-	char tcapbuf[512];	/* capability buffer */
-	char *bp = tcapbuf;
-#endif
+	int		ch;
 
-	if (argc < 1)
-		usage();
-	(void)setlocale(LC_ALL, "");
-
-	/* Terminal defaults to -Cq, non-terminal defaults to -1. */
-	if (isatty(STDOUT_FILENO)) {
-		termwidth = 80;
-		if ((p = getenv("COLUMNS")) != NULL && *p != '\0')
-			termwidth = atoi(p);
-		else if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &win) != -1 &&
-				win.ws_col > 0)
-			termwidth = win.ws_col;
-		f_nonprint = 1;
-	} else {
-		f_singlecol = 1;
-		/* retrieve environment variable, in case of explicit -C */
-		p = getenv("COLUMNS");
-		if (p)
-			termwidth = atoi(p);
-	}
-
-	/* Root is -A automatically. */
-	if (!getuid())
-		f_listdot = 1;
-
-	//fts_options = FTS_PHYSICAL;
 	//TODO: Use ft_getopt
 	while ((ch = getopt(argc, argv, "1@ABCFGHLOPRSTUWabcdefghiklmnopqrstuvwx"))
 			!= -1) {
@@ -97,35 +65,14 @@ int		main(int argc, char *argv[])
 				f_type = 1;
 				f_slash = 0;
 				break;
-			case 'H':
-				if (COMPAT_MODE("bin/ls", "Unix2003")) {
-					fts_options &= ~FTS_LOGICAL;
-					fts_options |= FTS_PHYSICAL;
-					fts_options |= FTS_COMFOLLOWDIR;
-				} else
-					fts_options |= FTS_COMFOLLOW;
-				break;
 			case 'G':
 				setenv("CLICOLOR", "", 1);
-				break;
-			case 'L':
-				fts_options &= ~FTS_PHYSICAL;
-				fts_options |= FTS_LOGICAL;
-				if (COMPAT_MODE("bin/ls", "Unix2003")) {
-					fts_options &= ~(FTS_COMFOLLOW|FTS_COMFOLLOWDIR);
-				}
-				break;
-			case 'P':
-				fts_options &= ~(FTS_COMFOLLOW|FTS_COMFOLLOWDIR);
-				fts_options &= ~FTS_LOGICAL;
-				fts_options |= FTS_PHYSICAL;
 				break;
 			case 'R':
 				f_recursive = 1;
 				break;
 			case 'a':
-				fts_options |= FTS_SEEDOT;
-				/* FALLTHROUGH */
+				f_seedot = 1;
 			case 'A':
 				f_listdot = 1;
 				break;
@@ -136,19 +83,6 @@ int		main(int argc, char *argv[])
 				break;
 			case 'f':
 				f_nosort = 1;
-				if (COMPAT_MODE("bin/ls", "Unix2003")) {
-					fts_options |= FTS_SEEDOT;
-					f_listdot = 1;
-				}
-				break;
-			case 'g':	/* Compatibility with Unix03 */
-				if (COMPAT_MODE("bin/ls", "Unix2003")) {
-					f_group = 1;
-					f_longform = 1;
-					f_singlecol = 0;
-					f_stream = 0;
-				}
-				break;
 			case 'h':
 				f_humanval = 1;
 				break;
@@ -165,30 +99,19 @@ int		main(int argc, char *argv[])
 				break;
 			case 'n':
 				f_numericonly = 1;
-				if (COMPAT_MODE("bin/ls", "Unix2003")) {
-					f_longform = 1;
-					f_singlecol = 0;
-					f_stream = 0;
-				}
+				f_longform = 1;
+				f_singlecol = 0;
+				f_stream = 0;
 				break;
 			case 'o':
-				if (COMPAT_MODE("bin/ls", "Unix2003")) {
-					f_owner = 1;
-					f_longform = 1;
-					f_singlecol = 0;
-					f_stream = 0;
-				} else {
-					f_flags = 1;
-				}
+				f_owner = 1;
+				f_longform = 1;
+				f_singlecol = 0;
+				f_stream = 0;
 				break;
 			case 'p':
 				f_slash = 1;
 				f_type = 1;
-				break;
-			case 'q':
-				f_nonprint = 1;
-				f_octal = 0;
-				f_octal_escape = 0;
 				break;
 			case 'r':
 				f_reversesort = 1;

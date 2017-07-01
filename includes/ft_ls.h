@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 07:23:00 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/01 09:45:44 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,10 @@ typedef struct			s_col
 	int					cnt;
 	struct winsize		win;
 }						t_col;
+
+typedef struct			s_ls_main
+{
+}						t_ls_main
 
 typedef struct			s_ls_file
 {
