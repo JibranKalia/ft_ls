@@ -6,14 +6,14 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 20:24:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 20:05:39 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 20:16:36 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
-extern int	g_ls_flags;
+extern int			g_ls_flags;
 
-static double	timespec_diff(struct timespec *start, struct timespec *stop)
+static double		timespec_diff(struct timespec *start, struct timespec *stop)
 {
 	struct timespec		result;
 
@@ -32,10 +32,28 @@ static double	timespec_diff(struct timespec *start, struct timespec *stop)
 	return (result.tv_sec);
 }
 
-static void		which_time(void *a, void *b)
+static inline void	which_time(void *a, void *b)
 {
-	((t_ls_file *)(a))->lstime = (((t_ls_file *)(a))->statinfo.st_mtimespec);
-	((t_ls_file *)(b))->lstime = (((t_ls_file *)(b))->statinfo.st_mtimespec);
+	if (g_ls_flags & FLG_c)
+	{
+		((t_ls_file *)(a))->lstime = ((t_ls_file *)(a))->statinfo.st_ctimespec;
+		((t_ls_file *)(b))->lstime = ((t_ls_file *)(b))->statinfo.st_ctimespec;
+	}
+	else if (g_ls_flags & FLG_U)
+	{
+		((t_ls_file *)(a))->lstime = ((t_ls_file *)(a))->statinfo.st_birthtimespec;
+		((t_ls_file *)(b))->lstime = ((t_ls_file *)(b))->statinfo.st_birthtimespec;
+	}
+	else if (g_ls_flags & FLG_u)
+	{
+		((t_ls_file *)(a))->lstime = ((t_ls_file *)(a))->statinfo.st_atimespec;
+		((t_ls_file *)(b))->lstime = ((t_ls_file *)(b))->statinfo.st_atimespec;
+	}
+	else
+	{
+		((t_ls_file *)(a))->lstime = ((t_ls_file *)(a))->statinfo.st_mtimespec;
+		((t_ls_file *)(b))->lstime = ((t_ls_file *)(b))->statinfo.st_mtimespec;
+	}
 }
 
 static int		ls_lexcmp(void *a, void *b)

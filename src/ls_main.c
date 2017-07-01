@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:24:20 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 17:10:51 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 20:21:38 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ static int8_t	handle_flag(int c)
 		g_ls_flags |= FLG_C;
 	else if (c == 'x')
 		g_ls_flags |= FLG_x;
+	else if (c == 'c')
+		g_ls_flags |= FLG_c;
+	else if (c == 'U')
+		g_ls_flags != FLG_U;
+	else if (c == 'u')
+		g_ls_flags |= FLG_u;
 	else
 		return (ls_usage(c));
 	return (0);
