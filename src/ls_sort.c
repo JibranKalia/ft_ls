@@ -6,12 +6,12 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 20:24:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 07:11:26 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 17:09:43 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
-extern uint8_t			g_ls_flags;
+extern int	g_ls_flags;
 
 static void	which_time(void *a, void *b)
 {

@@ -6,14 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 08:32:20 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 17:09:34 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-extern int8_t	g_ls_flags;
-
+extern int	g_ls_flags;
 
 int8_t		ls_get_dir(t_arr *files, char *path)
 {

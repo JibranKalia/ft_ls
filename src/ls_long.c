@@ -6,13 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 08:26:30 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 17:09:17 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-extern int8_t	g_ls_flags;
+extern int		g_ls_flags;
 
 static int8_t	print_mode(mode_t mode)
 {

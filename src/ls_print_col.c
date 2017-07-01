@@ -6,13 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 14:40:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 16:44:19 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 17:26:17 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-extern int8_t	g_ls_flags;
+extern int		g_ls_flags;
 
 static void		get_col_info(t_ls_file **tmp, t_col *col)
 {
@@ -38,73 +38,51 @@ static void		get_col_info(t_ls_file **tmp, t_col *col)
 }
 
 
-/**
-while (++j < col->col)
-{
-	k = col->row * j + i;
-	if (k >= col->file_count)
-		break ;
-	ft_printf("%-*s", col->max_len,
-			((t_ls_file*)files->contents[k])->name);
-}
-**/
-
 int8_t			ls_print_col(t_arr *files)
 {
 	t_col				*col;
 	int					row;
 	int					column;
 	int					base;
-	int					endcol;
-	int					chcnt;
-	int					cnt;
 
 	col = ft_memalloc(sizeof(t_col));
 	MEMCHECK(col);
-//	col->sortacross = (g_ls_flags & FLG_X) ? 1 : 0;
-	col->sortacross = 0;
+	col->sortacross = (g_ls_flags & FLG_x) ? 1 : 0;
 	col->file_count = files->end;
 	get_col_info((t_ls_file **)files->contents, col);
-	DEBUG("num row = %d", col->numrow);
-	DEBUG("num col = %d", col->numcol);
-	//DEBUG("filecount = %d", col->file_count);
-	DEBUG("col width = %d", col->colwidth);
-	//DEBUG("Sort style = %d", col->sortacross);
 	base = 0;
-	row = 0;
-	for (row = 0; row < col->numrow; ++row)
+	row = -1;
+	while(++row < col->numrow)
 	{
-		endcol = col->colwidth;
-		if (col->sortacross)
+		col->endcol = col->colwidth;
+		if (!col->sortacross)
 			base = row;
-		for (column = 0, chcnt = 0; column < col->numcol; ++column)
+		column = -1;
+		col->chcnt = 0;
+		while (++column < col->numcol)
 		{
-//			chcnt += ft_printf("%d %s", base, ((t_ls_file*)files->contents[base])->name);
-			chcnt += ft_printf("%s", ((t_ls_file*)files->contents[base])->name);
+			col->chcnt += ft_printf("%s", ((t_ls_file*)files->contents[base])->name);
 			if (col->sortacross)
 				base++;
 			else
 				base += col->numrow;
 			if (base >= col->file_count)
 				break;
-			/**
-			while ((cnt = ((chcnt + col->tabwidth) & ~(col->tabwidth - 1)))
-					<= endcol)
+			while ((col->cnt = ((col->chcnt + col->tabwidth) & ~(col->tabwidth - 1)))
+					<= col->endcol)
 			{
 				if (col->sortacross && column + 1 >= col->numcol)
 					break;
-				ft_putchar('\t');
-				chcnt = cnt;
+				write(1, "\t", 1);
+				col->chcnt = col->cnt;
 			}
-			endcol += col->colwidth;
-			//write(1, "\t", 1);
+			col->endcol += col->colwidth;
 		}
 		write(1, "\n", 1);
 	}
 	free(col);
 	return (0);
 }
-
 
 int8_t				ls_print_simple(t_arr *files)
 {

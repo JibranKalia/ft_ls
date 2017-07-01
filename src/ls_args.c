@@ -6,13 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 08:32:19 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 17:09:06 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-extern int8_t	g_ls_flags;
+extern int		g_ls_flags;
 
 static void		print_custom_l(t_arr *fil)
 {

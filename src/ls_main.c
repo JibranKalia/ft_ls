@@ -6,13 +6,13 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/30 21:24:20 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 15:54:31 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/06/30 17:10:51 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-uint8_t			g_ls_flags = 0;
+int				g_ls_flags = 0;
 
 static int8_t	handle_flag(int c)
 {
@@ -32,6 +32,10 @@ static int8_t	handle_flag(int c)
 		g_ls_flags |= (FLG_f | FLG_a);
 	else if (c == '1')
 		g_ls_flags |= FLG_1;
+	else if (c == 'C')
+		g_ls_flags |= FLG_C;
+	else if (c == 'x')
+		g_ls_flags |= FLG_x;
 	else
 		return (ls_usage(c));
 	return (0);
