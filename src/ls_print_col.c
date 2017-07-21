@@ -14,7 +14,7 @@
 
 extern int		g_ls_flags;
 
-static void		get_col_info(t_ls_file **tmp, t_col *col)
+static void		get_col_info(t_ls **tmp, t_col *col)
 {
 	int			i;
 	char		*p;
@@ -49,7 +49,7 @@ int8_t			ls_print_col(t_arr *files)
 	MEMCHECK(col);
 	col->sortacross = (g_ls_flags & FLG_x) ? 1 : 0;
 	col->file_count = files->end;
-	get_col_info((t_ls_file **)files->contents, col);
+	get_col_info((t_ls **)files->contents, col);
 	base = 0;
 	row = -1;
 	while(++row < col->numrow)
@@ -61,7 +61,7 @@ int8_t			ls_print_col(t_arr *files)
 		col->chcnt = 0;
 		while (++column < col->numcol)
 		{
-			col->chcnt += ft_printf("%s", ((t_ls_file*)files->contents[base])->name);
+			col->chcnt += ft_printf("%s", ((t_ls*)files->contents[base])->name);
 			if (col->sortacross)
 				base++;
 			else
@@ -86,10 +86,10 @@ int8_t			ls_print_col(t_arr *files)
 
 int8_t				ls_print_simple(t_arr *files)
 {
-	t_ls_file	**tmp;
+	t_ls	**tmp;
 	int			i;
 
-	tmp = (t_ls_file **)files->contents;
+	tmp = (t_ls **)files->contents;
 	i = -1;
 	while (++i < files->end)
 		ft_printf("%s\n", tmp[i]->name);

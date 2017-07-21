@@ -36,29 +36,29 @@ static inline void	which_time(void *a, void *b)
 {
 	if (g_ls_flags & FLG_c)
 	{
-		((t_ls_file *)(a))->lstime = ((t_ls_file *)(a))->statinfo.st_ctimespec;
-		((t_ls_file *)(b))->lstime = ((t_ls_file *)(b))->statinfo.st_ctimespec;
+		((t_ls *)(a))->lstime = ((t_ls *)(a))->statinfo.st_ctimespec;
+		((t_ls *)(b))->lstime = ((t_ls *)(b))->statinfo.st_ctimespec;
 	}
 	else if (g_ls_flags & FLG_U)
 	{
-		((t_ls_file *)(a))->lstime = ((t_ls_file *)(a))->statinfo.st_birthtimespec;
-		((t_ls_file *)(b))->lstime = ((t_ls_file *)(b))->statinfo.st_birthtimespec;
+		((t_ls *)(a))->lstime = ((t_ls *)(a))->statinfo.st_birthtimespec;
+		((t_ls *)(b))->lstime = ((t_ls *)(b))->statinfo.st_birthtimespec;
 	}
 	else if (g_ls_flags & FLG_u)
 	{
-		((t_ls_file *)(a))->lstime = ((t_ls_file *)(a))->statinfo.st_atimespec;
-		((t_ls_file *)(b))->lstime = ((t_ls_file *)(b))->statinfo.st_atimespec;
+		((t_ls *)(a))->lstime = ((t_ls *)(a))->statinfo.st_atimespec;
+		((t_ls *)(b))->lstime = ((t_ls *)(b))->statinfo.st_atimespec;
 	}
 	else
 	{
-		((t_ls_file *)(a))->lstime = ((t_ls_file *)(a))->statinfo.st_mtimespec;
-		((t_ls_file *)(b))->lstime = ((t_ls_file *)(b))->statinfo.st_mtimespec;
+		((t_ls *)(a))->lstime = ((t_ls *)(a))->statinfo.st_mtimespec;
+		((t_ls *)(b))->lstime = ((t_ls *)(b))->statinfo.st_mtimespec;
 	}
 }
 
 static int		ls_lexcmp(void *a, void *b)
 {
-	return (ft_strcmp(((t_ls_file *)(a))->path, ((t_ls_file *)(b))->path));
+	return (ft_strcmp(((t_ls *)(a))->path, ((t_ls *)(b))->path));
 }
 
 static int		ls_timecmp(void *a, void *b)
@@ -66,9 +66,9 @@ static int		ls_timecmp(void *a, void *b)
 	double		diff;
 
 	which_time(a, b);
-	diff = timespec_diff(&((t_ls_file *)(a))->lstime, &((t_ls_file *)(b))->lstime);
+	diff = timespec_diff(&((t_ls *)(a))->lstime, &((t_ls *)(b))->lstime);
 	if (diff == 0)
-			return (ft_strcmp(((t_ls_file *)(a))->path, ((t_ls_file *)(b))->path));
+			return (ft_strcmp(((t_ls *)(a))->path, ((t_ls *)(b))->path));
 	return (diff);
 }
 

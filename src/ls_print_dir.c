@@ -17,7 +17,7 @@ extern int	g_ls_flags;
 int8_t		ls_get_dir(t_arr *files, char *path)
 {
 	t_dir		*dp;
-	t_ls_file	*tmp;
+	t_ls	*tmp;
 	int			chk;
 	DIR			*dirp;
 
@@ -27,7 +27,7 @@ int8_t		ls_get_dir(t_arr *files, char *path)
 	{
 		if (dp->d_name[0] == '.' && !(g_ls_flags & FLG_a))
 			continue ;
-		tmp = ft_memalloc(sizeof(t_ls_file));
+		tmp = ft_memalloc(sizeof(t_ls));
 		MEMCHECK1(tmp, closedir(dirp));
 		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
 		tmp->name = ft_strdup(dp->d_name);
@@ -46,12 +46,12 @@ static inline void	ls_recursive(t_arr *files)
 	i = -1;
 	while (++i < files->end)
 	{
-		if (S_ISDIR(((t_ls_file *)files->contents[i])->statinfo.st_mode)
-				&& !(ft_strcmp(((t_ls_file *)files->contents[i])->name, ".") == 0
-					|| ft_strcmp(((t_ls_file *)files->contents[i])->name, "..") == 0))
+		if (S_ISDIR(((t_ls *)files->contents[i])->statinfo.st_mode)
+				&& !(ft_strcmp(((t_ls *)files->contents[i])->name, ".") == 0
+					|| ft_strcmp(((t_ls *)files->contents[i])->name, "..") == 0))
 		{
-			ft_printf("\n%s:\n", ((t_ls_file *)files->contents[i])->path);
-			ls_print_dir(((t_ls_file *)files->contents[i])->path);
+			ft_printf("\n%s:\n", ((t_ls *)files->contents[i])->path);
+			ls_print_dir(((t_ls *)files->contents[i])->path);
 		}
 	}
 }
@@ -60,9 +60,9 @@ int8_t			ls_print_dir(char *path)
 {
 	t_arr		*files;
 	int		i;
-	t_ls_file	**tmp;
+	t_ls	**tmp;
 
-	files = arr_create(sizeof(t_ls_file), 5);
+	files = arr_create(sizeof(t_ls), 5);
 	MEMCHECK(files);
 	files->del = &file_del;
 	if (ls_get_dir(files, path) == -1)
@@ -72,7 +72,7 @@ int8_t			ls_print_dir(char *path)
 		return (-1);
 	}
 	CHECK1(files->end == 0, arr_del(files), RETURN (-1), "Get Dir Failed");
-	tmp = (t_ls_file **)files->contents;
+	tmp = (t_ls **)files->contents;
 	i = -1;
 	ls_sort(files);
 	if (g_ls_flags & FLG_R)

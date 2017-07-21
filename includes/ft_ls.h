@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/20 17:39:36 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/20 19:50:24 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ typedef struct stat		t_stat;
 typedef struct timespec	t_timespec;
 
 /*
+** The -c and -u options override each other.
+* The -d option turns off the -R option.
 ** singlecol: use single column output
 ** longform: long listing format
 ** sortacross: sort across rows, not down columns
@@ -152,15 +154,20 @@ typedef struct			s_ls_data
 	long				blocksize;
 }						t_ls_data;
 
-typedef struct			s_ls_file
+typedef struct			s_ls
 {
 	char				*path;
 	char				*name;
 	t_stat				statinfo;
 	t_timespec			lstime;
-}						t_ls_file;
+}						t_ls;
 
 void					ls_sort(t_arr *files);
+
+/*
+** LS_FLAGS
+*/
+int8_t					handle_flag_1(int c);
 
 /*
 ** LS_ARGS

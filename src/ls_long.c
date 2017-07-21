@@ -51,7 +51,7 @@ static int8_t	print_permission(mode_t mode)
 	return (0);
 }
 
-static int8_t	print_time(t_ls_file *file)
+static int8_t	print_time(t_ls *file)
 {
 	time_t		out_time;
 	time_t		curr_time;
@@ -70,7 +70,7 @@ static int8_t	print_time(t_ls_file *file)
 	return (0);
 }
 
-int8_t		print_long(t_ls_file *file, int *padding)
+int8_t		print_long(t_ls *file, int *padding)
 {
 	struct passwd	*pwd;
 	struct group	*group;
@@ -100,14 +100,14 @@ int8_t			ls_print_l(t_arr *files)
 	blocks = 0;
 	while (++i < files->end)
 	{
-		find_padding(padding, ((t_ls_file *)files->contents[i])->statinfo);
-		blocks += ((t_ls_file *)files->contents[i])->statinfo.st_blocks;
+		find_padding(padding, ((t_ls *)files->contents[i])->statinfo);
+		blocks += ((t_ls *)files->contents[i])->statinfo.st_blocks;
 	}
 	ft_printf("total %d\n", blocks);
 	i = -1;
 	while (++i < files->end)
 	{
-		print_long((t_ls_file *)files->contents[i], padding);
+		print_long((t_ls *)files->contents[i], padding);
 		write(1, "\n", 1);
 	}
 	return (0);

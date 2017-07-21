@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 08:39:04 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/20 19:48:13 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ static void		print_custom_l(t_arr *fil)
 	ft_bzero(padding, sizeof(int) * 4);
 	i = -1;
 	while (++i < fil->end)
-		find_padding(padding, ((t_ls_file *)fil->contents[i])->statinfo);
+		find_padding(padding, ((t_ls *)fil->contents[i])->statinfo);
 	i = -1;
 	while (++i < fil->end)
 	{
-		print_long((t_ls_file *)fil->contents[i], padding);
+		print_long((t_ls *)fil->contents[i], padding);
 		write(1, "\n", 1);
 	}
 	write(1, "\n", 1);
@@ -53,14 +53,14 @@ static void		handle_dir(t_arr *dir)
 		return ;
 	if (dir->end == 1)
 	{
-		ls_print_dir(((t_ls_file *)dir->contents[0])->path);
+		ls_print_dir(((t_ls *)dir->contents[0])->path);
 		return ;
 	}
 	i = 0;
 	while (i < dir->end)
 	{
-		ft_printf("%s:\n", ((t_ls_file *)dir->contents[i])->name);
-		ls_print_dir(((t_ls_file *)dir->contents[i])->path);
+		ft_printf("%s:\n", ((t_ls *)dir->contents[i])->name);
+		ls_print_dir(((t_ls *)dir->contents[i])->path);
 		if ((++i) < dir->end)
 			write(1, "\n", 1);
 	}
@@ -73,21 +73,21 @@ static void		handle_naf(t_arr *naf)
 	ls_sort(naf);
 	i = -1;
 	while (++i < naf->end)
-		ft_dprintf(2, "ls: %s: %s\n", ((t_ls_file *)naf->contents[i])->name, strerror(errno));
+		ft_dprintf(2, "ls: %s: %s\n", ((t_ls *)naf->contents[i])->name, strerror(errno));
 }
 
-int8_t			ls_handle_args(int i, int argc, char **argv)
+int8_t			ls_traverse(int i, int argc, char **argv)
 {
 	t_arr			*naf;
 	t_arr			*dir;
 	t_arr			*fil;
-	t_ls_file		*tmp;
+	t_ls		*tmp;
 
-	fil = arr_create(sizeof(t_ls_file), 10);
+	fil = arr_create(sizeof(t_ls), 10);
 	MEMCHECK(fil);
-	dir = arr_create(sizeof(t_ls_file), 10);
+	dir = arr_create(sizeof(t_ls), 10);
 	MEMCHECK(dir);
-	naf = arr_create(sizeof(t_ls_file), 10);
+	naf = arr_create(sizeof(t_ls), 10);
 	MEMCHECK(naf);
 	fil->del = &file_del;
 	naf->del = &file_del;
@@ -95,7 +95,7 @@ int8_t			ls_handle_args(int i, int argc, char **argv)
 
 	while (++i < argc)
 	{
-		tmp = ft_memalloc(sizeof(t_ls_file));
+		tmp = ft_memalloc(sizeof(t_ls));
 		MEMCHECK(tmp);
 		tmp->path = ft_strdup(argv[i]);
 		tmp->name = ft_strdup(get_basename(argv[i]));

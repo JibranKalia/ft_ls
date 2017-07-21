@@ -16,9 +16,9 @@ void		file_del(void *elm)
 {
 	if (elm == 0)
 		return ;
-	ft_strdel(&((t_ls_file *)elm)->name);
-	ft_strdel(&((t_ls_file *)elm)->path);
-	ft_bzero(elm, sizeof(t_ls_file));
+	ft_strdel(&((t_ls *)elm)->name);
+	ft_strdel(&((t_ls *)elm)->path);
+	ft_bzero(elm, sizeof(t_ls));
 }
 
 int8_t		ls_usage(char flag)
