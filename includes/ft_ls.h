@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 11:04:58 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/20 17:39:36 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ typedef struct timespec	t_timespec;
 ** nonprint:
 */
 
+/**
 enum					e_ls_flags
 {
 	FLG_l = 0x1,
@@ -87,6 +88,7 @@ enum					e_ls_flags
 	FLG_U = 0x800,
 	FLG_u = 0x1000
 };
+**/
 
 typedef struct			s_ls_flg
 {

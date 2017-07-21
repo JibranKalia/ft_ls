@@ -21,10 +21,11 @@ CFLAGS		+= -g -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
 INC         := -I $(INCDIR)
 MAKEFLAGS	="-j $(grep -c ^processor /proc/cpuinfo)"
+HDRS		:= includes/ft_ls.h
 
 LIBFT		:= libft/libft.a
 
-FILES		+= ls_begin ls_print_dir ls_print_col ls_util ls_sort ls_long ls_args
+FILES		+= ls_begin ls_util
 #FILES		+= alloc_wrap
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .$(SRCEXT), $(FILES)))
 OBJ			:= $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRC:.$(SRCEXT)=.$(OBJEXT)))
@@ -36,7 +37,7 @@ COUNTER		=	$(words $n)$(eval n := $(call increment,$n))
 
 .PHONY = all clean fclean clean re
 
-all: $(LIBFT) $(TARGET)
+all: $(LIBFT) $(TARGET) $(HDRS) Makefile
 
 $(LIBFT):
 	@make -C libft
