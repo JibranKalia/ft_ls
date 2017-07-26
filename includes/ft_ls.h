@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/25 20:05:45 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 11:05:59 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,27 +168,38 @@ void					ls_sort(t_arr *files);
 /*
 ** LS_FLAGS
 */
+
 int8_t					handle_flag(int c);
 
 /*
 ** LS_TRAVERSE
 */
+
 int8_t					ls_traverse(int i, int argc, char **argv);
+
+/*
+** LS_HANDLEDIR
+*/
+
+int8_t			handle_dir(t_arr *dir);
 
 /*
 ** LS_PRINTCOL
 */
+
 int8_t					ls_printscol(t_arr *files);
 int8_t					ls_printcol(t_arr *files);
 
 /*
 ** LS_PRINTLONG
 */
+
 int8_t					ls_printlong(t_arr *files);
 
 /*
 ** LS_UTIL
 */
+
 void					file_del(void *elm);
 int8_t					ls_usage(char flag);
 void					find_padding(int *padding, t_stat statinfo);

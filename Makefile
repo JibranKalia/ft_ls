@@ -25,7 +25,7 @@ HDRS		:= includes/ft_ls.h
 
 LIBFT		:= libft/libft.a
 
-FILES		+= ls_begin ls_util ls_flags ls_traverse ls_printcol ls_printlong ls_sort
+FILES		+= ls_begin ls_util ls_flags ls_traverse ls_printcol ls_printlong ls_sort ls_handledir
 #FILES		+= alloc_wrap
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .$(SRCEXT), $(FILES)))
 OBJ			:= $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRC:.$(SRCEXT)=.$(OBJEXT)))

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/25 21:39:35 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 11:03:30 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,6 @@
 
 extern t_ls_flg			g_ls_flg;
 extern PRINTLS			g_printfcn;
-
-int8_t		get_dir(t_arr *files, char *path)
-{
-	t_dir		*dp;
-	t_ls		*tmp;
-	int			chk;
-	DIR			*dirp;
-
-	dirp = opendir(path);
-	CHECK(dirp == NULL, RETURN(-1), "Open Dir Failed");
-	while ((dp = readdir(dirp)) != 0)
-	{
-		if (dp->d_name[0] == '.' && !(g_ls_flg.listdot))
-			continue ;
-		tmp = ft_memalloc(sizeof(t_ls));
-		MEMCHECK1(tmp, closedir(dirp));
-		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
-		tmp->name = ft_strdup(dp->d_name);
-		chk = lstat(tmp->path, &tmp->statinfo);
-		CHECK2(chk == -1, closedir(dirp), arr_del(files), RETURN(-1), "Lstat Failed");
-		arr_push(files, tmp);
-	}
-	closedir(dirp);
-	return (0);
-}
 
 /**
 static void		print_custom_l(t_arr *fil)
@@ -77,42 +52,6 @@ static void		handle_files(t_arr *fil)
 	**/
 }
 
-static int		handle_dir(t_arr *dir)
-{
-	int		i;
-
-	t_arr	*files;
-	files = arr_create(sizeof(t_ls), 5);
-	MEMCHECK(files);
-	files->del = &file_del;
-	if (dir->end == 0)
-	{
-		CHK(get_dir(files, ".") == -1, -1);
-		CHK(g_printfcn(files) == -1, -1);
-		arr_del(files);
-		return (0);
-	}
-	if (dir->end == 1)
-	{
-		CHK(get_dir(files, ((t_ls *)dir->contents[0])->path) == -1, -1);
-		g_printfcn(files);
-		arr_del(files);
-		return (0);
-	}
-	i = 0;
-	while (i < dir->end)
-	{
-		files = arr_create(sizeof(t_ls), 5);
-		MEMCHECK(files);
-		files->del = &file_del;
-		ft_printf("%s:\n", ((t_ls *)dir->contents[i])->name);
-		g_printfcn(files);
-		if ((++i) < dir->end)
-			write(1, "\n", 1);
-		arr_del(files);
-	}
-	return (0);
-}
 
 static void		handle_naf(t_arr *naf)
 {
