@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/20 19:50:24 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 18:48:26 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 typedef struct timespec	t_timespec;
 
-/*
+/**
 ** The -c and -u options override each other.
-* The -d option turns off the -R option.
+** The -d option turns off the -R option.
 ** singlecol: use single column output
 ** longform: long listing format
 ** sortacross: sort across rows, not down columns
@@ -71,7 +71,7 @@ typedef struct timespec	t_timespec;
 **
 ** seedot:
 ** nonprint:
-*/
+**/
 
 /**
 enum					e_ls_flags
@@ -127,7 +127,7 @@ typedef struct			s_ls_flg
 	unsigned int whiteout:1;
 	unsigned int group:1;
 	unsigned int owner:1;
-	
+
 	unsigned int seedot:1;
 	unsigned int nonprint:1;
 }						t_ls_flg;
@@ -167,30 +167,29 @@ void					ls_sort(t_arr *files);
 /*
 ** LS_FLAGS
 */
-int8_t					handle_flag_1(int c);
+int8_t					handle_flag(int c);
 
 /*
-** LS_ARGS
+** LS_TRAVERSE
 */
-
-int8_t					ls_handle_args(int i, int argc, char **argv);
+int8_t					ls_traverse(int i, int argc, char **argv);
 
 /*
-** LS_PRINT
+** LS_PRINTCOL
 */
+int8_t					ls_printscol(t_arr *files);
+int8_t					ls_printcol(t_arr *files);
 
-int8_t					ls_print_dir(char *path);
-int8_t					ls_print_col(t_arr	*files);
-int8_t					ls_print_simple(t_arr *files);
-int8_t					ls_print_l(t_arr *files);
-int8_t					print_long(t_ls_file *file, int *padding);
+/*
+** LS_PRINTLONG
+*/
+int8_t					ls_printlong(t_arr *files);
 
 /*
 ** LS_UTIL
 */
-
+void					file_del(void *elm);
+int8_t					ls_usage(char flag);
 void					find_padding(int *padding, t_stat statinfo);
 char					*get_basename(char *path);
-void					file_del(void	*elm);
-int8_t					ls_usage(char flag);
 #endif

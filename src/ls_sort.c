@@ -6,12 +6,12 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/18 20:24:36 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 10:56:01 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 19:04:54 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
-extern int			g_ls_flags;
+extern t_ls_flg		g_ls_flg;
 
 static double		timespec_diff(struct timespec *start, struct timespec *stop)
 {
@@ -34,17 +34,17 @@ static double		timespec_diff(struct timespec *start, struct timespec *stop)
 
 static inline void	which_time(void *a, void *b)
 {
-	if (g_ls_flags & FLG_c)
+	if (g_ls_flg.statustime == 1)
 	{
 		((t_ls *)(a))->lstime = ((t_ls *)(a))->statinfo.st_ctimespec;
 		((t_ls *)(b))->lstime = ((t_ls *)(b))->statinfo.st_ctimespec;
 	}
-	else if (g_ls_flags & FLG_U)
+	else if (g_ls_flg.birthtime == 1)
 	{
 		((t_ls *)(a))->lstime = ((t_ls *)(a))->statinfo.st_birthtimespec;
 		((t_ls *)(b))->lstime = ((t_ls *)(b))->statinfo.st_birthtimespec;
 	}
-	else if (g_ls_flags & FLG_u)
+	else if (g_ls_flg.accesstime == 1)
 	{
 		((t_ls *)(a))->lstime = ((t_ls *)(a))->statinfo.st_atimespec;
 		((t_ls *)(b))->lstime = ((t_ls *)(b))->statinfo.st_atimespec;
@@ -56,7 +56,7 @@ static inline void	which_time(void *a, void *b)
 	}
 }
 
-static int		ls_lexcmp(void *a, void *b)
+int				ls_namecmp(void *a, void *b)
 {
 	return (ft_strcmp(((t_ls *)(a))->path, ((t_ls *)(b))->path));
 }
@@ -74,13 +74,13 @@ static int		ls_timecmp(void *a, void *b)
 
 void			ls_sort(t_arr *files)
 {
-	if (g_ls_flags & FLG_f)
+	if (g_ls_flg.nosort == 1)
 		return ;
-	if (g_ls_flags & FLG_t)
+	if (g_ls_flg.timesort == 1)
 		ft_qsort(files->contents, 0, ARR_COUNT(files) - 1, ls_timecmp);
 	else
-		ft_qsort(files->contents, 0, ARR_COUNT(files) - 1, ls_lexcmp);
-	if (g_ls_flags & FLG_r)
+		ft_qsort(files->contents, 0, ARR_COUNT(files) - 1, ls_namecmp);
+	if (g_ls_flg.reversesort == 1)
 		arr_reverse(files);
 }
 
@@ -91,66 +91,32 @@ static int		ls_sort(void)
 	if (g_ls_flg->reversesort)
 	{
 		if (g_ls_flg->sizesort)
-			sortfcn = revsizecmp;
+			g_sortfcn = revsizecmp;
 		else if (!g_ls_flg->timesort)
-			sortfcn = revnamecmp;
+			g_sortfcn = ls_revnamecmp;
 		else if (g_ls_flg->accesstime)
-			sortfcn = revacccmp;
+			g_sortfcn = revacccmp;
 		else if (g_ls_flg->statustime)
-			sortfcn = revstatcmp;
+			g_sortfcn = revstatcmp;
 		else if (g_ls_flg->birthtime)
-			sortfcn = revbirthcmp;
+			g_sortfcn = revbirthcmp;
 		else		// Use modification time.
-			sortfcn = revmodcmp;
+			g_sortfcn = revmodcmp;
 	}
 	else
 	{
 		if (g_ls_flg->sizesort)
-			sortfcn = sizecmp;
+			g_sortfcn = sizecmp;
 		else if (!g_ls_flg->timesort)
-			sortfcn = namecmp;
+			g_sortfcn = ls_namecmp;
 		else if (g_ls_flg->accesstime)
-			sortfcn = acccmp;
+			g_sortfcn = acccmp;
 		else if (g_ls_flg->statustime)
-			sortfcn = statcmp;
+			g_sortfcn = statcmp;
 		else if (g_ls_flg->birthtime)
-			sortfcn = birthcmp;
+			g_sortfcn = birthcmp;
 		else		// Use modification time.
-			sortfcn = modcmp;
+			g_sortfcn = modcmp;
 	}
-}
-**/
-
-
-/*
-* Ordering for mastercmp:
-* If ordering the argv (fts_level = FTS_ROOTLEVEL) return non-directories
-* as larger than directories.  Within either group, use the sort function.
-* All other levels use the sort function.  Error entries remain unsorted.
-*/
-
-/**
-static int		mastercmp(const FTSENT **a, const FTSENT **b)
-{
-	int a_info, b_info;
-
-	a_info = (*a)->fts_info;
-	if (a_info == FTS_ERR)
-		return (0);
-	b_info = (*b)->fts_info;
-	if (b_info == FTS_ERR)
-		return (0);
-
-	if (a_info == FTS_NS || b_info == FTS_NS)
-		return (namecmp(*a, *b));
-
-	if (a_info != b_info &&
-			(*a)->fts_level == FTS_ROOTLEVEL && !f_listdir) {
-		if (a_info == FTS_D)
-			return (1);
-		if (b_info == FTS_D)
-			return (-1);
-	}
-	return (sortfcn(*a, *b));
 }
 **/

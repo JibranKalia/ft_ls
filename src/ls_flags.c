@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 18:09:29 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/20 18:27:56 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 18:10:58 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,3 +145,31 @@ int8_t			handle_flag_1(int c)
 		return (handle_flag_2(c));
 	return (0);
 }
+
+int8_t			handle_flag(int c)
+{
+	if (c == '1')
+	{
+		g_ls_flg.singlecol = 1;
+		g_ls_flg.longform = 0;
+		g_ls_flg.stream = 0;
+	}
+	else if (c == 'B')
+		g_ls_flg.nonprint = 0;
+	else if (c == 'C')
+	{
+		g_ls_flg.sortacross = 0;
+		g_ls_flg.longform = 0;
+		g_ls_flg.singlecol = 0;
+	}
+	else if (c == 'x')
+	{
+		g_ls_flg.sortacross = 1;
+		g_ls_flg.longform = 0;
+		g_ls_flg.singlecol = 0;
+	}
+	else
+		return (handle_flag_1(c));
+	return (0);
+}
+

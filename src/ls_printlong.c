@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_long.c                                          :+:      :+:    :+:   */
+/*   ls_printlong.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/30 17:09:17 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 18:33:32 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-extern int		g_ls_flags;
+extern t_ls_flg		g_ls_flg;
 
 static int8_t	print_mode(mode_t mode)
 {
@@ -60,7 +60,7 @@ static int8_t	print_time(t_ls *file)
 	out_time = file->statinfo.st_atime;
 	curr_time = time(0);
 	tmp = ctime(&out_time);
-	if (g_ls_flags & FLG_T)
+	if (g_ls_flg.sectime == 1)
 		ft_printf(" %2.2s %3.3s %8.8s %4.4s", &tmp[8], &tmp[4], &tmp[11],
 				&tmp[20]);
 	else if (ABS(curr_time - out_time) > 15770000)
@@ -89,7 +89,7 @@ int8_t		print_long(t_ls *file, int *padding)
 	return (0);
 }
 
-int8_t			ls_print_l(t_arr *files)
+int8_t			ls_printlong(t_arr *files)
 {
 	int		i;
 	int		blocks;

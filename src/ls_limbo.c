@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_dir.c                                     :+:      :+:    :+:   */
+/*   ls_limbo.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:48 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 11:01:32 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 19:10:55 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,6 @@
 
 extern int	g_ls_flags;
 
-int8_t		ls_get_dir(t_arr *files, char *path)
-{
-	t_dir		*dp;
-	t_ls	*tmp;
-	int			chk;
-	DIR			*dirp;
-
-	dirp = opendir(path);
-	CHECK(dirp == NULL, RETURN(-1), "Open Dir Failed");
-	while ((dp = readdir(dirp)) != 0)
-	{
-		if (dp->d_name[0] == '.' && !(g_ls_flags & FLG_a))
-			continue ;
-		tmp = ft_memalloc(sizeof(t_ls));
-		MEMCHECK1(tmp, closedir(dirp));
-		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
-		tmp->name = ft_strdup(dp->d_name);
-		chk = lstat(tmp->path, &tmp->statinfo);
-		CHECK2(chk == -1, closedir(dirp), arr_del(files), RETURN(-1), "Lstat Failed");
-		arr_push(files, tmp);
-	}
-	closedir(dirp);
-	return (0);
-}
 
 static inline void	ls_recursive(t_arr *files)
 {
@@ -56,6 +32,7 @@ static inline void	ls_recursive(t_arr *files)
 	}
 }
 
+/**
 int8_t			ls_print_dir(char *path)
 {
 	t_arr		*files;
@@ -86,3 +63,4 @@ int8_t			ls_print_dir(char *path)
 	arr_del(files);
 	return (0);
 }
+**/

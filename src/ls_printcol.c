@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_print_col.c                                     :+:      :+:    :+:   */
+/*   ls_printcol.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 14:40:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 10:53:24 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 18:33:46 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-extern int		g_ls_flags;
+extern t_ls_flg		g_ls_flg;
 
 static void		get_col_info(t_ls **tmp, t_col *col)
 {
@@ -38,7 +38,7 @@ static void		get_col_info(t_ls **tmp, t_col *col)
 }
 
 
-int8_t			ls_print_col(t_arr *files)
+int8_t			ls_printcol(t_arr *files)
 {
 	t_col				*col;
 	int					row;
@@ -47,7 +47,7 @@ int8_t			ls_print_col(t_arr *files)
 
 	col = ft_memalloc(sizeof(t_col));
 	MEMCHECK(col);
-	col->sortacross = (g_ls_flags & FLG_x) ? 1 : 0;
+	col->sortacross = g_ls_flg.sortacross;
 	col->file_count = files->end;
 	get_col_info((t_ls **)files->contents, col);
 	base = 0;
@@ -84,7 +84,7 @@ int8_t			ls_print_col(t_arr *files)
 	return (0);
 }
 
-int8_t				ls_print_simple(t_arr *files)
+int8_t				ls_printscol(t_arr *files)
 {
 	t_ls	**tmp;
 	int			i;
