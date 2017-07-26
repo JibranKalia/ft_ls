@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 06:00:08 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/25 18:48:26 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 20:10:56 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_ls_flg		g_ls_flg;
 t_ls_data		g_ls_data;
-static int8_t	(*g_printfcn)(t_arr *);
+PRINTLS			g_printfcn;
 
 static int8_t	parse(int argc, char **argv)
 {
@@ -36,13 +36,13 @@ static int8_t	parse(int argc, char **argv)
 		++i;
 	}
 	if (g_ls_flg.singlecol)
-		g_printfcn = ls_printscol;
+		g_printfcn = &ls_printscol;
 	else if (g_ls_flg.longform)
-		g_printfcn = ls_printlong;
+		g_printfcn = &ls_printlong;
 	//else if (g_ls_flg.stream)
 	//	g_ls_data.printfcn = printstream;
 	else
-		g_printfcn = ls_printcol;
+		g_printfcn = &ls_printcol;
 	ls_traverse(i, argc, argv);
 	return (0);
 }

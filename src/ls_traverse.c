@@ -6,14 +6,39 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/25 19:10:18 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 21:39:35 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-extern t_ls_flg			g_ls_flags;
-extern t_ls_data		g_ls_data;
+extern t_ls_flg			g_ls_flg;
+extern PRINTLS			g_printfcn;
+
+int8_t		get_dir(t_arr *files, char *path)
+{
+	t_dir		*dp;
+	t_ls		*tmp;
+	int			chk;
+	DIR			*dirp;
+
+	dirp = opendir(path);
+	CHECK(dirp == NULL, RETURN(-1), "Open Dir Failed");
+	while ((dp = readdir(dirp)) != 0)
+	{
+		if (dp->d_name[0] == '.' && !(g_ls_flg.listdot))
+			continue ;
+		tmp = ft_memalloc(sizeof(t_ls));
+		MEMCHECK1(tmp, closedir(dirp));
+		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
+		tmp->name = ft_strdup(dp->d_name);
+		chk = lstat(tmp->path, &tmp->statinfo);
+		CHECK2(chk == -1, closedir(dirp), arr_del(files), RETURN(-1), "Lstat Failed");
+		arr_push(files, tmp);
+	}
+	closedir(dirp);
+	return (0);
+}
 
 /**
 static void		print_custom_l(t_arr *fil)
@@ -40,7 +65,8 @@ static void		handle_files(t_arr *fil)
 	
 	if (fil->end > 0)
 		ls_sort(fil);
-	g_ls_data.printfcn(fil);
+	g_printfcn(fil);
+
 	/**
 	if (g_ls_flg.longform == 1)
 		print_custom_l(fil);
@@ -51,25 +77,41 @@ static void		handle_files(t_arr *fil)
 	**/
 }
 
-static void		handle_dir(t_arr *dir)
+static int		handle_dir(t_arr *dir)
 {
 	int		i;
 
+	t_arr	*files;
+	files = arr_create(sizeof(t_ls), 5);
+	MEMCHECK(files);
+	files->del = &file_del;
 	if (dir->end == 0)
-		return ;
+	{
+		CHK(get_dir(files, ".") == -1, -1);
+		CHK(g_printfcn(files) == -1, -1);
+		arr_del(files);
+		return (0);
+	}
 	if (dir->end == 1)
 	{
-		ls_print_dir(((t_ls *)dir->contents[0])->path);
-		return ;
+		CHK(get_dir(files, ((t_ls *)dir->contents[0])->path) == -1, -1);
+		g_printfcn(files);
+		arr_del(files);
+		return (0);
 	}
 	i = 0;
 	while (i < dir->end)
 	{
+		files = arr_create(sizeof(t_ls), 5);
+		MEMCHECK(files);
+		files->del = &file_del;
 		ft_printf("%s:\n", ((t_ls *)dir->contents[i])->name);
-		ls_print_dir(((t_ls *)dir->contents[i])->path);
+		g_printfcn(files);
 		if ((++i) < dir->end)
 			write(1, "\n", 1);
+		arr_del(files);
 	}
+	return (0);
 }
 
 static void		handle_naf(t_arr *naf)
@@ -82,35 +124,6 @@ static void		handle_naf(t_arr *naf)
 		ft_dprintf(2, "ls: %s: %s\n", ((t_ls *)naf->contents[i])->name, strerror(errno));
 }
 
-t_arr*		ls_get_dir(char *path)
-{
-	t_arr		*files;
-	t_dir		*dp;
-	t_ls	*tmp;
-	int			chk;
-	DIR			*dirp;
-
-	files = arr_create(sizeof(t_ls), 10);
-	MEMCHECK(files);
-	files->del = &file_del;
-	dirp = opendir(path);
-	CHECK(dirp == NULL, RETURN(-1), "Open Dir Failed");
-	while ((dp = readdir(dirp)) != 0)
-	{
-		if (dp->d_name[0] == '.' && !(g_ls_flags & FLG_a))
-			continue ;
-		tmp = ft_memalloc(sizeof(t_ls));
-		MEMCHECK1(tmp, closedir(dirp));
-		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
-		tmp->name = ft_strdup(dp->d_name);
-		chk = lstat(tmp->path, &tmp->statinfo);
-		CHECK2(chk == -1, closedir(dirp), arr_del(files), RETURN(-1), "Lstat Failed");
-		arr_push(files, tmp);
-	}
-	closedir(dirp);
-	return (0);
-}
-
 int8_t			ls_traverse(int i, int argc, char **argv)
 {
 	t_arr			*naf;
@@ -118,8 +131,8 @@ int8_t			ls_traverse(int i, int argc, char **argv)
 	t_arr			*fil;
 	t_ls		*tmp;
 
-	fil = arr_create(sizeof(t_ls), 10);
-	MEMCHECK(fil);
+	DEBUG("i = %d", i);
+	DEBUG("argc = %d", argc);
 	dir = arr_create(sizeof(t_ls), 10);
 	MEMCHECK(dir);
 	naf = arr_create(sizeof(t_ls), 10);
@@ -127,33 +140,36 @@ int8_t			ls_traverse(int i, int argc, char **argv)
 	fil->del = &file_del;
 	naf->del = &file_del;
 	dir->del = &file_del;
+	fil = arr_create(sizeof(t_ls), 10);
+	MEMCHECK(fil);
 
-	while (++i < argc)
+	while (i < argc)
 	{
+		DEBUG("TRAVERSE");
 		tmp = ft_memalloc(sizeof(t_ls));
 		MEMCHECK(tmp);
 		tmp->path = ft_strdup(argv[i]);
 		tmp->name = ft_strdup(get_basename(argv[i]));
 		if (stat(argv[i], &tmp->statinfo) == -1)
 		{
-//			DEBUG("NAF");
+			DEBUG("NAF");
 			arr_push(naf, tmp);
-			continue;
 		}
-		if (S_ISDIR(tmp->statinfo.st_mode))
+		else if (S_ISDIR(tmp->statinfo.st_mode))
 		{
-//			DEBUG("DIR");
+			DEBUG("DIR");
 			arr_push(dir, tmp);
 		}
 		else
 		{
-//			DEBUG("FILE");
+			DEBUG("FILE");
 			arr_push(fil, tmp);
 		}
+		++i;
 	}
 	handle_naf(naf);
 	handle_files(fil);
-	//handle_dir(dir);
+	handle_dir(dir);
 	arr_del(dir);
 	arr_del(naf);
 	arr_del(fil);

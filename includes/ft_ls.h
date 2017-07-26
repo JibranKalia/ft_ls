@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/25 18:48:26 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 20:05:45 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 typedef struct timespec	t_timespec;
+typedef int8_t	(*PRINTLS)(t_arr *);
 
 /**
 ** The -c and -u options override each other.
