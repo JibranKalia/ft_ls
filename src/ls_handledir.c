@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 11:03:54 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 11:34:06 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 11:47:52 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ static int8_t		get_dir(t_arr *files, char *path)
 	CHECK(dirp == NULL, RETURN(-1), "Open Dir Failed");
 	while ((dp = readdir(dirp)) != 0)
 	{
-		if (dp->d_name[0] == '.' && !(g_ls_flg.listdot))
-			continue ;
+		if (dp->d_name[0] == '.' && !(g_ls_flg.seedot))
+ 		continue ;
 		tmp = ft_memalloc(sizeof(t_ls));
 		MEMCHECK1(tmp, closedir(dirp));
 		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);

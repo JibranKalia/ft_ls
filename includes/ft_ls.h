@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 11:05:59 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 11:46:40 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,25 +72,6 @@ typedef int8_t	(*PRINTLS)(t_arr *);
 **
 ** seedot:
 ** nonprint:
-**/
-
-/**
-enum					e_ls_flags
-{
-	FLG_l = 0x1,
-	FLG_R = 0x2,
-	FLG_a = 0x4,
-	FLG_r = 0x8,
-	FLG_t = 0x10,
-	FLG_T = 0x20,
-	FLG_f = 0x40,
-	FLG_1 = 0x80,
-	FLG_C = 0x100,
-	FLG_x = 0x200,
-	FLG_c = 0x400,
-	FLG_U = 0x800,
-	FLG_u = 0x1000
-};
 **/
 
 typedef struct			s_ls_flg
