@@ -6,14 +6,14 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 06:00:08 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/25 20:10:56 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 12:00:46 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
 t_ls_flg		g_ls_flg;
-t_ls_data		g_ls_data;
+t_ls_data		g_data;
 PRINTLS			g_printfcn;
 
 static int8_t	parse(int argc, char **argv)
@@ -47,9 +47,31 @@ static int8_t	parse(int argc, char **argv)
 	return (0);
 }
 
+/*
+**	Terminal defaults to -Cq, non-terminal defaults to -1.
+*/
+
 int				main(int argc, char **argv)
 {
+	char *p;
 
+	if (isatty(STDOUT_FILENO))
+	{
+		g_data.termwidth = 80;
+	//	if ((p = getenv("COLUMNS")) != NULL && *p != '\0')
+	//		g_data.termwidth = ft_atoi(p);
+		if (ioctl(STDOUT_FILENO, TIOCGWINSZ, &g_data.win) != -1 && g_data.win.ws_col > 0)
+			g_data.termwidth = g_data.win.ws_col;
+		g_ls_flg.nonprint = 1;
+	}
+	else
+	{
+		g_ls_flg.singlecol = 1;
+//		p = getenv("COLUMNS");
+//		if (p)
+//			g_data.termwidth = atoi(p);
+	}
+	DEBUG("TERMWIDTH1 = %d", g_data.termwidth);
 	if ((parse(argc, argv)) == -1)
 		return (-1);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 11:46:40 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 12:00:00 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,12 +128,13 @@ typedef struct			s_col
 	int					endcol;
 	int					chcnt;
 	int					cnt;
-	struct winsize		win;
 }						t_col;
 
 typedef struct			s_ls_data
 {
 	long				blocksize;
+	int					termwidth;
+	struct winsize		win;
 }						t_ls_data;
 
 typedef struct			s_ls
