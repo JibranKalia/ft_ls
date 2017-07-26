@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 11:03:30 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 16:32:01 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,11 @@ int8_t			ls_traverse(int i, int argc, char **argv)
 	MEMCHECK(dir);
 	naf = arr_create(sizeof(t_ls), 10);
 	MEMCHECK(naf);
+	fil = arr_create(sizeof(t_ls), 10);
+	MEMCHECK(fil);
 	fil->del = &file_del;
 	naf->del = &file_del;
 	dir->del = &file_del;
-	fil = arr_create(sizeof(t_ls), 10);
-	MEMCHECK(fil);
 
 	while (i < argc)
 	{

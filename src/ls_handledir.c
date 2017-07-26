@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 11:03:54 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 11:47:52 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 16:40:59 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ static int8_t	print_dir(char *path)
 	tmp = (t_ls **)files->contents;
 	i = -1;
 	ls_sort(files);
+	g_printfcn(files);
 	if (g_ls_flg.recursive == 1)
 		ls_recursive(files);
-	g_printfcn(files);
 	arr_del(files);
 	return (0);
 }
