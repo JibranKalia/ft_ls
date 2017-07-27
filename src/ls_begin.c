@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 06:00:08 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 12:00:46 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/26 17:01:19 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ int				main(int argc, char **argv)
 //		if (p)
 //			g_data.termwidth = atoi(p);
 	}
-	DEBUG("TERMWIDTH1 = %d", g_data.termwidth);
 	if ((parse(argc, argv)) == -1)
 		return (-1);
 	return (0);
