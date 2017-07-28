@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/06/29 07:24:34 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/07/01 10:49:33 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,14 +17,16 @@ SRCDIR		:= src
 INCDIR		:= includes
 OBJEXT		:= o
 SRCEXT		:= c
-CFLAGS		+= -I includes/ -I libft/includes/
+CFLAGS		+= -g -I includes/ -I libft/includes/
 LDFLAGS		:= -L libft/ -lft
 INC         := -I $(INCDIR)
 MAKEFLAGS	="-j $(grep -c ^processor /proc/cpuinfo)"
+HDRS		:= includes/ft_ls.h
 
 LIBFT		:= libft/libft.a
 
-FILES		+= ls_main ls_print_dir ls_extra ls_sort ls_long
+FILES		+= ls_begin ls_util ls_flags ls_traverse ls_printcol ls_printlong ls_sort ls_handledir
+#FILES		+= alloc_wrap
 SRC			:= $(addprefix $(SRCDIR)/, $(addsuffix .$(SRCEXT), $(FILES)))
 OBJ			:= $(patsubst $(SRCDIR)/%, $(OBJDIR)/%, $(SRC:.$(SRCEXT)=.$(OBJEXT)))
 
@@ -35,7 +37,7 @@ COUNTER		=	$(words $n)$(eval n := $(call increment,$n))
 
 .PHONY = all clean fclean clean re
 
-all: $(TARGET)
+all: $(LIBFT) $(TARGET) $(HDRS) Makefile
 
 $(LIBFT):
 	@make -C libft

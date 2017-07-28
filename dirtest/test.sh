@@ -1,6 +1,6 @@
 echo "-l test"
 make
-rm -f out1 out2 diff1
+rm -f out1 out2
 touch out1 out2
 ls -l > out1
 ./ft_ls -l > out2

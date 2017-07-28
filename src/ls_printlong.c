@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ls_long.c                                          :+:      :+:    :+:   */
+/*   ls_printlong.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/06/29 06:45:24 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/25 18:33:32 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
 
-extern int8_t	g_ls_flags;
+extern t_ls_flg		g_ls_flg;
 
 static int8_t	print_mode(mode_t mode)
 {
@@ -51,7 +51,7 @@ static int8_t	print_permission(mode_t mode)
 	return (0);
 }
 
-static int8_t	print_time(t_ls_file *file)
+static int8_t	print_time(t_ls *file)
 {
 	time_t		out_time;
 	time_t		curr_time;
@@ -60,7 +60,7 @@ static int8_t	print_time(t_ls_file *file)
 	out_time = file->statinfo.st_atime;
 	curr_time = time(0);
 	tmp = ctime(&out_time);
-	if (g_ls_flags & FLG_T)
+	if (g_ls_flg.sectime == 1)
 		ft_printf(" %2.2s %3.3s %8.8s %4.4s", &tmp[8], &tmp[4], &tmp[11],
 				&tmp[20]);
 	else if (ABS(curr_time - out_time) > 15770000)
@@ -70,7 +70,7 @@ static int8_t	print_time(t_ls_file *file)
 	return (0);
 }
 
-static int8_t	print_long(t_ls_file *file, int *padding)
+int8_t		print_long(t_ls *file, int *padding)
 {
 	struct passwd	*pwd;
 	struct group	*group;
@@ -89,7 +89,7 @@ static int8_t	print_long(t_ls_file *file, int *padding)
 	return (0);
 }
 
-int8_t			ft_ls_l(t_arr *files)
+int8_t			ls_printlong(t_arr *files)
 {
 	int		i;
 	int		blocks;
@@ -100,14 +100,14 @@ int8_t			ft_ls_l(t_arr *files)
 	blocks = 0;
 	while (++i < files->end)
 	{
-		find_padding(padding, ((t_ls_file *)files->contents[i])->statinfo);
-		blocks += ((t_ls_file *)files->contents[i])->statinfo.st_blocks;
+		find_padding(padding, ((t_ls *)files->contents[i])->statinfo);
+		blocks += ((t_ls *)files->contents[i])->statinfo.st_blocks;
 	}
 	ft_printf("total %d\n", blocks);
 	i = -1;
 	while (++i < files->end)
 	{
-		print_long((t_ls_file *)files->contents[i], padding);
+		print_long((t_ls *)files->contents[i], padding);
 		write(1, "\n", 1);
 	}
 	return (0);
