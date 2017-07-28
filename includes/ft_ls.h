@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 12:00:00 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/27 18:55:41 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,6 @@ int8_t			handle_dir(t_arr *dir);
 ** LS_PRINTCOL
 */
 
-int8_t					ls_printscol(t_arr *files);
 int8_t					ls_printcol(t_arr *files);
 
 /*
@@ -177,6 +176,7 @@ int8_t					ls_printcol(t_arr *files);
 */
 
 int8_t					ls_printlong(t_arr *files);
+int8_t					ls_printscol(t_arr *files);
 
 /*
 ** LS_UTIL
