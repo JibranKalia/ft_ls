@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 11:03:54 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 16:46:10 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/27 19:01:13 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,6 @@ static int8_t	print_dir(char *path)
 	MEMCHECK(files);
 	files->del = &file_del;
 	get_dir(files, path);
-	tmp = (t_ls **)files->contents;
 	i = -1;
 	ls_sort(files);
 	g_printfcn(files);
@@ -86,17 +85,20 @@ int8_t			handle_dir(t_arr *dir)
 
 	if (dir->end == 0)
 	{
+		DEBUG("HANDLE DIR DOT");
 		print_dir(".");
 		return (0);
 	}
 	if (dir->end == 1)
 	{
+		DEBUG("HANDLE DIR 1");
 		CHK(print_dir(((t_ls *)dir->contents[0])->path) == -1, -1);
 		return (0);
 	}
 	i = 0;
 	while (i < dir->end)
 	{
+		DEBUG("HANDLE DIR %d", dir->end);
 		ft_printf("%s:\n", ((t_ls *)dir->contents[i])->name);
 		print_dir(((t_ls *)dir->contents[i])->path);
 		if ((++i) < dir->end)

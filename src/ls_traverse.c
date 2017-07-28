@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 16:48:55 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/27 19:06:57 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,11 @@ static void		print_custom_l(t_arr *fil)
 
 static void		handle_files(t_arr *fil)
 {
-	
+	DEBUG("HANDLE FILES");
 	if (fil->end > 0)
 		ls_sort(fil);
 	g_printfcn(fil);
-
-	/**
-	if (g_ls_flg.longform == 1)
-		print_custom_l(fil);
-	else if (g_ls_flg.singlecol = 1)
-		ls_print_simple(fil);
-	else
-		ls_print_col(fil);
-	**/
 }
-
 
 static void		handle_naf(t_arr *naf)
 {
@@ -63,24 +53,42 @@ static void		handle_naf(t_arr *naf)
 		ft_dprintf(2, "ls: %s: %s\n", ((t_ls *)naf->contents[i])->name, strerror(errno));
 }
 
+static int8_t	create_arr(t_arr **naf, t_arr **dir, t_arr **fil)
+{
+	*dir = arr_create(sizeof(t_ls), 10);
+	MEMCHECK(*dir);
+	*naf = arr_create(sizeof(t_ls), 10);
+	MEMCHECK(*naf);
+	*fil = arr_create(sizeof(t_ls), 10);
+	MEMCHECK(*fil);
+	(*fil)->del = &file_del;
+	(*naf)->del = &file_del;
+	(*dir)->del = &file_del;
+	return (0);
+}
+
+static int8_t	handle_arr(t_arr *naf, t_arr *dir, t_arr *fil)
+{
+	if (naf->end > 0)
+		handle_naf(naf);
+	if (fil->end > 0)
+		handle_files(fil);
+	handle_dir(dir);
+	arr_del(dir);
+	arr_del(naf);
+	arr_del(fil);
+	return (0);
+}
+
 int8_t			ls_traverse(int i, int argc, char **argv)
 {
 	t_arr			*naf;
 	t_arr			*dir;
 	t_arr			*fil;
-	t_ls		*tmp;
-
-	DEBUG("i = %d", i);
-	DEBUG("argc = %d", argc);
-	dir = arr_create(sizeof(t_ls), 10);
-	MEMCHECK(dir);
-	naf = arr_create(sizeof(t_ls), 10);
-	MEMCHECK(naf);
-	fil = arr_create(sizeof(t_ls), 10);
-	MEMCHECK(fil);
-	fil->del = &file_del;
-	naf->del = &file_del;
-	dir->del = &file_del;
+	t_ls			*tmp;
+	
+	if( create_arr(&naf, &dir, &fil) == -1)
+		return (-1);
 
 	while (i < argc)
 	{
@@ -106,11 +114,6 @@ int8_t			ls_traverse(int i, int argc, char **argv)
 		}
 		++i;
 	}
-	handle_naf(naf);
-	handle_files(fil);
-	handle_dir(dir);
-	arr_del(dir);
-	arr_del(naf);
-	arr_del(fil);
+	handle_arr(naf, dir, fil);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/25 18:33:32 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/27 19:15:24 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,14 @@ static int8_t	print_time(t_ls *file)
 	time_t		curr_time;
 	char		*tmp;
 
-	out_time = file->statinfo.st_atime;
+	if (g_ls_flg.accesstime)
+		out_time = file->statinfo.st_atime;
+	else if (g_ls_flg.statustime)
+		out_time = file->statinfo.st_ctime;
+	else if (g_ls_flg.birthtime)
+		out_time = file->statinfo.st_birthtime;
+	else
+		out_time = file->statinfo.st_mtime;
 	curr_time = time(0);
 	tmp = ctime(&out_time);
 	if (g_ls_flg.sectime == 1)
