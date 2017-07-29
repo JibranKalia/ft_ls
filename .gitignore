@@ -1,6 +1,7 @@
 alloc_wrap.c
 out*
 test*
+sandbox*
 
 # Object files #
 ###################

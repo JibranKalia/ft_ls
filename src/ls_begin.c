@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/01 06:00:08 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 17:01:19 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/28 18:22:04 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ static int8_t	parse(int argc, char **argv)
 	while (i < argc && argv[i][0] == '-')
 	{
 		if (argv[i][1] == '-')
+		{
+			++i;
 			break;
+		}
 		j = 1;
 		while (argv[i][j] != 0)
 		{
