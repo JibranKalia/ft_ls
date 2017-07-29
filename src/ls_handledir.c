@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 11:03:54 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/28 18:37:47 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/29 14:44:23 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,27 +80,19 @@ static int8_t	print_dir(char *path)
 	return (0);
 }
 
-int8_t			handle_dir(t_arr *dir)
+int8_t			handle_dir(t_arr *dir, int fil_count, int naf_count)
 {
 	int		i;
 
-	if (dir->end == 0)
-	{
-		DEBUG("HANDLE DIR DOT");
-		print_dir(".");
-		return (0);
-	}
-	if (dir->end == 1)
-	{
-		DEBUG("HANDLE DIR 1");
-		CHK(print_dir(((t_ls *)dir->contents[0])->path) == -1, -1);
-		return (0);
-	}
+	DEBUG("File Count = %d", fil_count);
+	DEBUG("Naf Count = %d", naf_count);
+	if (dir->end == 0 && fil_count == 0 && naf_count == 0)
+		return (print_dir("."));
 	i = 0;
 	while (i < dir->end)
 	{
-		DEBUG("HANDLE DIR %d", dir->end);
-		ft_printf("%s:\n", ((t_ls *)dir->contents[i])->name);
+		if (dir->end > 1 || fil_count > 0 || naf_count > 0)
+			ft_printf("%s:\n", ((t_ls *)dir->contents[i])->name);
 		print_dir(((t_ls *)dir->contents[i])->path);
 		if ((++i) < dir->end)
 			write(1, "\n", 1);

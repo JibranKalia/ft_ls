@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/28 18:36:05 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/29 14:34:12 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ int8_t					ls_traverse(int i, int argc, char **argv);
 ** LS_HANDLEDIR
 */
 
-int8_t			handle_dir(t_arr *dir);
+int8_t					handle_dir(t_arr *dir, int fil_count, int naf_count);
 
 /*
 ** LS_PRINTCOL

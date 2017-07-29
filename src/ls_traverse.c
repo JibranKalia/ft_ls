@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/28 18:35:34 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/29 14:42:48 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,12 @@ static int8_t	create_arr(t_arr **naf, t_arr **dir, t_arr **fil)
 
 static int8_t	handle_arr(t_arr *naf, t_arr *dir, t_arr *fil)
 {
+	
 	if (naf->end > 0)
 		handle_naf(naf);
 	if (fil->end > 0)
 		handle_files(fil);
-	handle_dir(dir);
+	handle_dir(dir, fil->end, naf->end);
 	arr_del(dir);
 	arr_del(naf);
 	arr_del(fil);
