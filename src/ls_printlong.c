@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/27 19:15:24 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/29 14:51:08 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,8 @@ int8_t			ls_printlong(t_arr *files)
 		find_padding(padding, ((t_ls *)files->contents[i])->statinfo);
 		blocks += ((t_ls *)files->contents[i])->statinfo.st_blocks;
 	}
-	ft_printf("total %d\n", blocks);
+	if (g_ls_flg.longform || g_ls_flg.size)
+		ft_printf("total %d\n", blocks);
 	i = -1;
 	while (++i < files->end)
 	{

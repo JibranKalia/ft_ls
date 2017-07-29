@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 11:03:54 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/29 14:44:23 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/29 14:45:37 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,6 @@ int8_t			handle_dir(t_arr *dir, int fil_count, int naf_count)
 {
 	int		i;
 
-	DEBUG("File Count = %d", fil_count);
-	DEBUG("Naf Count = %d", naf_count);
 	if (dir->end == 0 && fil_count == 0 && naf_count == 0)
 		return (print_dir("."));
 	i = 0;

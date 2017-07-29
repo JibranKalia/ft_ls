@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 14:40:22 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/26 12:00:58 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/29 14:50:40 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ static void		get_col_info(t_ls **tmp, t_col *col)
 	col->max_len = 0;
 	col->tabwidth = 8;
 	col->termwidth = g_data.termwidth;
-	DEBUG("TERMWIDTH = %d", col->termwidth);
 	i = -1;
 	while (++i < col->file_count)
 		col->max_len = MAX(col->max_len, (int)ft_strlen(tmp[i]->name));
