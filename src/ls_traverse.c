@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/27 19:06:57 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/28 18:35:34 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void		handle_naf(t_arr *naf)
 	ls_sort(naf);
 	i = -1;
 	while (++i < naf->end)
-		ft_dprintf(2, "ls: %s: %s\n", ((t_ls *)naf->contents[i])->name, strerror(errno));
+		ls_warn(((t_ls *)naf->contents[i])->name);
 }
 
 static int8_t	create_arr(t_arr **naf, t_arr **dir, t_arr **fil)

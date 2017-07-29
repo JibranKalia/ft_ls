@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/01 17:09:41 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/01 11:03:01 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/28 18:35:09 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,10 @@ char	*get_basename(char *path)
 			name = path;
 	}
 	return (name);
+}
+
+int8_t	ls_warn(char *filename)
+{
+	ft_dprintf(2, "ls: %s: %s\n", filename, strerror(errno));
+	return (0);
 }

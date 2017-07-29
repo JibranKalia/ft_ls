@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/27 18:55:41 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/28 18:36:05 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,4 +186,5 @@ void					file_del(void *elm);
 int8_t					ls_usage(char flag);
 void					find_padding(int *padding, t_stat statinfo);
 char					*get_basename(char *path);
+int8_t					ls_warn(char *filename);
 #endif

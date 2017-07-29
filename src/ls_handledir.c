@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 11:03:54 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/27 19:01:13 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/28 18:37:47 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static int8_t		get_dir(t_arr *files, char *path)
 	int			chk;
 	DIR			*dirp;
 
-	dirp = opendir(path);
+	if ((dirp = opendir(path)) == NULL)
+		return (ls_warn(get_basename(path)));
 	CHECK(dirp == NULL, RETURN(-1), "Open Dir Failed");
 	while ((dp = readdir(dirp)) != 0)
 	{
