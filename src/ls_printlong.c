@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/30 22:39:28 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/30 23:07:18 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,29 +64,27 @@ static int8_t	print_permission(mode_t mode)
 	return (0);
 }
 
-static int8_t	print_time(t_ls *file)
-{
-	time_t		out_time;
-	time_t		curr_time;
-	char		*tmp;
+#define	SIXMONTHS	((365 / 2) * 86400)
 
-	if (g_ls_flg.accesstime)
-		out_time = file->statinfo.st_atime;
-	else if (g_ls_flg.statustime)
-		out_time = file->statinfo.st_ctime;
-	else if (g_ls_flg.birthtime)
-		out_time = file->statinfo.st_birthtime;
-	else
-		out_time = file->statinfo.st_mtime;
-	curr_time = time(0);
-	tmp = ctime(&out_time);
-	if (g_ls_flg.sectime == 1)
+static int8_t	print_time(time_t ftime)
+{
+	static time_t	now;
+	char		*tmp;
+	
+	if (now == 0)
+		now = time(NULL);
+	tmp = ctime(&ftime);
+	if (g_ls_flg.sectime)
 		ft_printf(" %2.2s %3.3s %8.8s %4.4s", &tmp[8], &tmp[4], &tmp[11],
 				&tmp[20]);
-	else if (ABS(curr_time - out_time) > 15770000)
-		ft_printf(" %2.2s %3.3s  %4.4s", &tmp[8], &tmp[4], &tmp[20]);
+	else if (ftime + SIXMONTHS > now && ftime < now + SIXMONTHS)
+	{
+		ft_printf(" %3.3s %2.2s %5.5s", &tmp[4], &tmp[8], &tmp[11]);
+	}
 	else
-		ft_printf(" %2.2s %3.3s %5.5s", &tmp[8], &tmp[4], &tmp[11]);
+	{
+		ft_printf(" %2.2s %3.3s  %4.4s", &tmp[8], &tmp[4], &tmp[20]);
+	}
 	return (0);
 }
 
@@ -104,7 +102,14 @@ int8_t		print_long(t_ls *file, int *padding)
 		ft_printf(" %-*s", padding[2], group->gr_name);
 	write(1, "  ", 2);
 	ft_printf("%*lld", padding[3], file->statinfo.st_size);
-	print_time(file);
+	if (g_ls_flg.accesstime)
+		print_time(file->statinfo.st_atime);
+	else if (g_ls_flg.statustime)
+		print_time(file->statinfo.st_ctime);
+	else if (g_ls_flg.birthtime)
+		print_time(file->statinfo.st_birthtime);
+	else
+		print_time(file->statinfo.st_mtime);
 	ft_printf(" %s", file->name);
 	if (S_ISLNK(file->statinfo.st_mode))
 		print_link(file->path);
