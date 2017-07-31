@@ -6,7 +6,7 @@
 #    By: jkalia <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/03/23 14:12:11 by jkalia            #+#    #+#              #
-#*   Updated: 2017/07/28 18:22:19 by jkalia           ###   ########.fr       *#
+#*   Updated: 2017/07/30 21:58:04 by jkalia           ###   ########.fr       *#
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ INCDIR		:= includes
 OBJEXT		:= o
 SRCEXT		:= c
 CFLAGS		+= -g -I includes/ -I libft/includes/
-#CFLAGS		+= -DNDEBUG
+CFLAGS		+= -DNDEBUG
 LDFLAGS		:= -L libft/ -lft
 INC         := -I $(INCDIR)
 MAKEFLAGS	="-j $(grep -c ^processor /proc/cpuinfo)"

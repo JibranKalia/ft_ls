@@ -6,13 +6,26 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/29 14:51:08 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/30 22:39:28 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <ft_ls.h>
+#define PATH_MAX 4096
 
 extern t_ls_flg		g_ls_flg;
+
+static int8_t	print_link(char *path)
+{
+	char link[PATH_MAX + 1];
+
+	ft_bzero(link, PATH_MAX + 1);
+	if (readlink(path, link, PATH_MAX) == -1)
+		return(ls_warn(get_basename(path)));
+	ft_putstr(" -> ");
+	ft_putstr(link);
+	return (0);
+}
 
 static int8_t	print_mode(mode_t mode)
 {
@@ -93,6 +106,8 @@ int8_t		print_long(t_ls *file, int *padding)
 	ft_printf("%*lld", padding[3], file->statinfo.st_size);
 	print_time(file);
 	ft_printf(" %s", file->name);
+	if (S_ISLNK(file->statinfo.st_mode))
+		print_link(file->path);
 	return (0);
 }
 
