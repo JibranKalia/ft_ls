@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/26 11:03:54 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/29 14:45:37 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/30 23:40:25 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ static int8_t	print_dir(char *path)
 	int		i;
 	t_ls	**tmp;
 
+	g_ls_flg.dirprint = 1;
 	files = arr_create(sizeof(t_ls), 5);
 	MEMCHECK(files);
 	files->del = &file_del;

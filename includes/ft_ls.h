@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/29 14:34:12 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/30 23:41:33 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ typedef int8_t	(*PRINTLS)(t_arr *);
 /**
 ** The -c and -u options override each other.
 ** The -d option turns off the -R option.
+** dirprint: printing dir not file
 ** singlecol: use single column output
 ** longform: long listing format
 ** sortacross: sort across rows, not down columns
@@ -76,6 +77,7 @@ typedef int8_t	(*PRINTLS)(t_arr *);
 
 typedef struct			s_ls_flg
 {
+	unsigned int dirprint:1;
 	unsigned int singlecol:1;
 	unsigned int longform:1;
 	unsigned int sortacross:1;

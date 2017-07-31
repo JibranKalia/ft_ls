@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/29 09:07:07 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/30 22:07:07 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/30 23:40:53 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static void		print_custom_l(t_arr *fil)
 static void		handle_files(t_arr *fil, int dir_count)
 {
 	DEBUG("HANDLE FILES");
+	g_ls_flg.dirprint = 0;
 	if (fil->end > 0)
 		ls_sort(fil);
 	g_printfcn(fil);
@@ -74,7 +75,6 @@ static int8_t	create_arr(t_arr **naf, t_arr **dir, t_arr **fil)
 
 static int8_t	handle_arr(t_arr *naf, t_arr *dir, t_arr *fil)
 {
-	
 	if (naf->end > 0)
 		handle_naf(naf);
 	if (fil->end > 0)

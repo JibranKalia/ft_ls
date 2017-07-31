@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/30 23:30:30 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/30 23:44:16 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ int8_t			ls_printlong(t_arr *files)
 	int		blocks;
 	int		padding[4];
 
+	DEBUG("Dir Print = %d", g_ls_flg.dirprint);
+	DEBUG("Long Form = %d", g_ls_flg.longform);
 	ft_bzero(padding, sizeof(int) * 4);
 	i = -1;
 	blocks = 0;
@@ -130,7 +132,7 @@ int8_t			ls_printlong(t_arr *files)
 		find_padding(padding, ((t_ls *)files->contents[i])->statinfo);
 		blocks += ((t_ls *)files->contents[i])->statinfo.st_blocks;
 	}
-	if (g_ls_flg.longform || g_ls_flg.size)
+	if ((g_ls_flg.longform || g_ls_flg.size) && g_ls_flg.dirprint) 
 		ft_printf("total %d\n", blocks);
 	i = -1;
 	while (++i < files->end)
