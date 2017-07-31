@@ -6,7 +6,7 @@
 /*   By: jkalia <jkalia@student.42.us.org>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/26 08:19:09 by jkalia            #+#    #+#             */
-/*   Updated: 2017/07/30 23:07:18 by jkalia           ###   ########.fr       */
+/*   Updated: 2017/07/30 23:30:30 by jkalia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ static int8_t	print_permission(mode_t mode)
 }
 
 #define	SIXMONTHS	((365 / 2) * 86400)
+#define DATE &tmp[8]
+#define MONTH &tmp[4]
+#define TIME &tmp[11]
+#define YEAR &tmp[20]
 
 static int8_t	print_time(time_t ftime)
 {
@@ -75,16 +79,12 @@ static int8_t	print_time(time_t ftime)
 		now = time(NULL);
 	tmp = ctime(&ftime);
 	if (g_ls_flg.sectime)
-		ft_printf(" %2.2s %3.3s %8.8s %4.4s", &tmp[8], &tmp[4], &tmp[11],
-				&tmp[20]);
+		ft_printf(" %3.3s %2.2s %8.8s %4.4s", MONTH, DATE, TIME,
+				YEAR);
 	else if (ftime + SIXMONTHS > now && ftime < now + SIXMONTHS)
-	{
-		ft_printf(" %3.3s %2.2s %5.5s", &tmp[4], &tmp[8], &tmp[11]);
-	}
+		ft_printf(" %3.3s %2.2s %5.5s", MONTH, DATE, TIME);
 	else
-	{
-		ft_printf(" %2.2s %3.3s  %4.4s", &tmp[8], &tmp[4], &tmp[20]);
-	}
+		ft_printf(" %3.3s %2.2s  %4.4s", MONTH, DATE, YEAR);
 	return (0);
 }
 
