@@ -24,9 +24,11 @@ static int8_t	parse(int argc, char **argv)
 	int notused;
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
-	{
-		if (argv[i][1] == '-')
+		{
+		if (argv[i][1] == '-'){
+			++i;
 			break;
+		}
 		j = 1;
 		while (argv[i][j] != 0)
 		{

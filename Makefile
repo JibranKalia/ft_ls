@@ -60,6 +60,13 @@ clean:
 		printf "\r\033[32mRemoving libft-$(OBJDIR)\033[0m\033[K\n"; \
 	fi;
 
+debugclean:
+	@if [ -e $(OBJDIR) ]; \
+		then \
+		rm -rf $(OBJDIR); \
+		printf "\r\033[32mRemoving libft-$(OBJDIR)\033[0m\033[K\n"; \
+	fi;
+
 fclean:
 	@$(MAKE) clean
 	@if [ -e $(TARGET) ]; \
@@ -71,4 +78,8 @@ fclean:
 	
 re:
 	@$(MAKE) fclean
+	@$(MAKE) all
+
+debug:
+		@$(MAKE) debugclean
 	@$(MAKE) all

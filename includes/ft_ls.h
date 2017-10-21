@@ -13,6 +13,7 @@
 #ifndef FT_LS_H
 # define FT_LS_H
 
+#define NDEBUG
 # include <dirent.h>
 # include <grp.h>
 # include <libft.h>
