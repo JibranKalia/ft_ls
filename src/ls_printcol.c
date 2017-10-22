@@ -43,6 +43,7 @@ int8_t			ls_printcol(t_arr *files)
 	int					column;
 	int					base;
 
+	DEBUG("PRINT COL");
 	col = ft_memalloc(sizeof(t_col));
 	MEMCHECK(col);
 	col->sortacross = g_ls_flg.sortacross;
@@ -87,6 +88,7 @@ int8_t				ls_printscol(t_arr *files)
 	t_ls	**tmp;
 	int			i;
 
+	DEBUG("PRINT S COL");
 	tmp = (t_ls **)files->contents;
 	i = -1;
 	while (++i < files->end)

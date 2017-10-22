@@ -102,6 +102,7 @@ int8_t			ls_printlong(t_arr *files)
 	int		blocks;
 	int		padding[4];
 
+	DEBUG("PRINT LONG");
 	ft_bzero(padding, sizeof(int) * 4);
 	i = -1;
 	blocks = 0;
