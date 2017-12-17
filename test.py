@@ -4,7 +4,7 @@ import shutil
 import unittest
 import shlex
 
-testdirectory = '/Users/jibrankalia/ls-test'
+testdirectory = '/tmp/ls-test'
 
 def buildEnv():
     if not os.path.exists(testdirectory):
