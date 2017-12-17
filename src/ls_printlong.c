@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <ft_ls.h>
+#include <langinfo.h>
 
 extern t_ls_flg		g_ls_flg;
 
@@ -51,12 +52,28 @@ static int8_t	print_permission(mode_t mode)
 	return (0);
 }
 
+#define	SIXMONTHS	((365 / 2) * 86400)
+/**
+ * ctime output = Thu Nov 24 18:22:48 1986\n\0 
+ * Index 4 - Nov
+ * Index 8 - 24 
+ * Index 11 - 18:22:48
+ * Index 20 - 1986
+ */
+
+#define MONTH &tmp[4]	//%3.3s
+#define DAY &tmp[8]		//%2.2s 
+#define TIME &tmp[11]	//%8.8s for full time otherwise %5.5s
+#define YEAR &tmp[20]	//%4.4s
+
 static int8_t	print_time(t_ls *file)
 {
 	time_t		out_time;
 	time_t		curr_time;
 	char		*tmp;
-
+	static int	d_first = -1;
+	if (d_first < 0)
+		d_first = (*nl_langinfo(D_MD_ORDER) == 'd');
 	if (g_ls_flg.accesstime)
 		out_time = file->statinfo.st_atime;
 	else if (g_ls_flg.statustime)
@@ -67,13 +84,29 @@ static int8_t	print_time(t_ls *file)
 		out_time = file->statinfo.st_mtime;
 	curr_time = time(0);
 	tmp = ctime(&out_time);
-	if (g_ls_flg.sectime == 1)
-		ft_printf(" %2.2s %3.3s %8.8s %4.4s", &tmp[8], &tmp[4], &tmp[11],
-				&tmp[20]);
-	else if (ABS(curr_time - out_time) > 15770000)
-		ft_printf(" %2.2s %3.3s  %4.4s", &tmp[8], &tmp[4], &tmp[20]);
-	else
-		ft_printf(" %2.2s %3.3s %5.5s", &tmp[8], &tmp[4], &tmp[11]);
+	if (g_ls_flg.sectime == 1) {
+		if (d_first) {
+			/* dd mmm hh:mm:ss yyyy */
+			ft_printf(" %2.2s %3.3s %8.8s %4.4s", DAY, MONTH, TIME, YEAR);
+		} else {
+			/* mmm dd hh:mm:ss yyyy */
+			ft_printf(" %3.3s %2.2s %8.8s %4.4s", MONTH, DAY, TIME, YEAR);
+		}
+	}
+	else if (ABS(curr_time - out_time) > SIXMONTHS) {
+		if (d_first) {
+			ft_printf(" %2.2s %3.3s  %4.4s", DAY, MONTH, YEAR);
+		} else {
+			ft_printf(" %3.3s %2.2s %4.4s", MONTH, DAY, YEAR);
+		}
+	}
+	else {
+		if (d_first) {
+			ft_printf(" %2.2s %3.3s %5.5s", DAY, MONTH, TIME);
+		} else {
+			ft_printf(" %3.3s %2.2s %5.5s", MONTH, DAY, TIME);
+		}
+	}
 	return (0);
 }
 
