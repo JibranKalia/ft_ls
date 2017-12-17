@@ -41,7 +41,7 @@ static void		handle_files(t_arr *fil)
 	if (fil->end > 0)
 		ls_sort(fil);
 	g_printfcn(fil);
-	ft_printf("\n")
+	ft_printf("\n");
 }
 
 static void		handle_naf(t_arr *naf)

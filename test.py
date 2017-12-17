@@ -28,12 +28,12 @@ def setupEnv(command):
 def mainLS(directory, args):
     allArgs = shlex.split('/bin/ls ' + args + ' ' + directory)
     lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE)
-    return (lsreturn.stdout)
+    return (lsreturn.stdout.decode())
     
 def testLS(directory, args):
-    allArgs = shlex.split('/bin/ls ' + args + ' ' + directory)
+    allArgs = shlex.split('/Users/jibrankalia/ls/ft_ls/ft_ls ' + args + ' ' + directory)
     lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE)
-    return (lsreturn.stdout)
+    return (lsreturn.stdout.decode())
 
 class TestLSCompare(unittest.TestCase):
 
