@@ -61,5 +61,25 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    @unittest.skip("Not handling symbolic paths")
+    def test_sys_00_test_user_bin(self):
+        # self.maxDiff=None
+        args = '-lR /usr/bin'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    def test_07_test_opt_t(self):
+        # self.maxDiff=None
+        setupEnv("touch -t 201312101830.55 a")
+        setupEnv("touch -t 201212101830.55 b")
+        setupEnv("touch -t 201412101830.55 c")
+        setupEnv("touch -t 201411221830.55 d")
+        setupEnv("touch -t 201405212033.55 e")
+        setupEnv("touch -t 201409221830.55 f")
+        setupEnv("touch -t 202007221830.55 g")
+        setupEnv("touch -t 300012101830.55 h")
+        args = '-1t'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
 if __name__ == '__main__':
     unittest.main()
