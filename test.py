@@ -4,56 +4,62 @@ import shutil
 import unittest
 import shlex
 
-td = '/Users/jibrankalia/ls-test'
+testdirectory = '/Users/jibrankalia/ls-test'
 
-def buildEnv(directory):
-    if not os.path.exists(directory):
-        os.makedirs(directory)
+def buildEnv():
+    if not os.path.exists(testdirectory):
+        os.makedirs(testdirectory)
 
-def cleanEnv(directory):
-    shutil.rmtree(directory)
+def cleanEnv():
+    shutil.rmtree(testdirectory)
 
-def refreshEnv(directory):
-    cleanEnv(directory)
-    buildEnv(directory)
+def refreshEnv():
+    cleanEnv(testdirectory)
+    buildEnv(testdirectory)
 
 def setupEnv(command):
     try:
-        subprocess.run(shlex.split(command))
+        subprocess.run(shlex.split(command), cwd=testdirectory)
     except PermissionError:
         pass
     except FileNotFoundError:
-        buildEnv(td)
+        buildEnv()
 
-def mainLS(directory, args):
-    allArgs = shlex.split('/bin/ls ' + args + ' ' + directory)
+def mainLS(args):
+    allArgs = shlex.split('/bin/ls ' + args + ' ' + testdirectory)
     lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE)
     return (lsreturn.stdout.decode())
     
-def testLS(directory, args):
-    allArgs = shlex.split('/Users/jibrankalia/ls/ft_ls/ft_ls ' + args + ' ' + directory)
+def testLS(args):
+    allArgs = shlex.split('/Users/jibrankalia/ls/ft_ls/ft_ls ' + args + ' ' + testdirectory)
     lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE)
     return (lsreturn.stdout.decode())
 
 class TestLSCompare(unittest.TestCase):
 
     def setUp(self):
-        setupEnv(td)
+        buildEnv()
 
     def tearDown(self):
-        cleanEnv(td)
+        cleanEnv()
 
     def testSimple(self):
-        setupEnv('touch ' + td + '/test')
+        setupEnv('touch test')
         args = '-1'
-        expected = mainLS(td, args)
-        self.assertEqual(testLS(td, args), expected)
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
 
     def testSimple2(self):
-        setupEnv('touch ' + td + '/test')
+        setupEnv('touch test')
         args = '-lr'
-        expected = mainLS(td, args)
-        self.assertEqual(testLS(td, args), expected)
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    def testSimple3(self):
+        setupEnv('mkdir - dir')
+        args = '-lr'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
 
 if __name__ == '__main__':
     unittest.main()
