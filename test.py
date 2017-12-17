@@ -31,7 +31,7 @@ def mainLS(args):
     return (lsreturn.stdout.decode())
     
 def testLS(args):
-    allArgs = shlex.split('/Users/jibrankalia/ls/ft_ls/ft_ls ' + args + ' ' + testdirectory)
+    allArgs = shlex.split(os.getcwd() + '/ft_ls ' + args + ' ' + testdirectory)
     lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE)
     return (lsreturn.stdout.decode())
 

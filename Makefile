@@ -81,5 +81,5 @@ re:
 	@$(MAKE) all
 
 debug:
-		@$(MAKE) debugclean
+	@$(MAKE) debugclean
 	@$(MAKE) all
