@@ -75,6 +75,9 @@ static int8_t	handle_arr(t_arr *naf, t_arr *dir, t_arr *fil)
 		handle_naf(naf);
 	if (fil->end > 0)
 		handle_files(fil);
+	// Unique case where there is a naf and only one dir. The name of dir has to be printed
+	if (naf->end > 0 && dir->end == 1)
+		ft_printf("%s:\n", ((t_ls *)dir->contents[0])->path);
 	handle_dir(dir);
 	arr_del(dir);
 	arr_del(naf);
