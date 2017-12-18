@@ -68,6 +68,7 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    # @unittest.skip("To lazy to think of time sort atm")
     def test_07_test_opt_t(self):
         self.maxDiff=None
         setupEnv("touch -t 201312101830.55 a")
@@ -78,7 +79,7 @@ class TestLSCompare(unittest.TestCase):
         setupEnv("touch -t 201409221830.55 f")
         setupEnv("touch -t 202007221830.55 g")
         setupEnv("touch -t 300012101830.55 h")
-        args = '-lTt'
+        args = '-1t'
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 if __name__ == '__main__':

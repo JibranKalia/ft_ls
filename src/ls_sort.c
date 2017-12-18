@@ -15,21 +15,18 @@ extern t_ls_flg		g_ls_flg;
 
 static double		timespec_diff(struct timespec *start, struct timespec *stop)
 {
-	struct timespec		result;
-
-	if ((stop->tv_nsec - start->tv_nsec) < 0)
-	{
+	struct timespec result;
+	if ((stop->tv_nsec - start->tv_nsec) < 0) {
 		result.tv_sec = stop->tv_sec - start->tv_sec - 1;
-		result.tv_nsec = stop->tv_nsec - start->tv_nsec;
-	}
-	else
-	{
+		result.tv_nsec = stop->tv_nsec - start->tv_nsec + 1000000000;
+	} 
+	else {
 		result.tv_sec = stop->tv_sec - start->tv_sec;
 		result.tv_nsec = stop->tv_nsec - start->tv_nsec;
 	}
-	if (result.tv_sec == 0)
-		return (result.tv_nsec);
-	return (result.tv_sec);
+	if (!result.tv_sec)
+		return result.tv_nsec;
+    return result.tv_sec;
 }
 
 static inline void	which_time(void *a, void *b)
@@ -69,7 +66,7 @@ static int		ls_timecmp(void *a, void *b)
 	diff = timespec_diff(&((t_ls *)(a))->lstime, &((t_ls *)(b))->lstime);
 	if (diff == 0)
 			return (ft_strcmp(((t_ls *)(a))->path, ((t_ls *)(b))->path));
-	return (diff);
+	return ((diff) > 0 ? 1 : -1);
 }
 
 void			ls_sort(t_arr *files)
