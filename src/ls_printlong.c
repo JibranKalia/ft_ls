@@ -15,6 +15,15 @@
 
 extern t_ls_flg		g_ls_flg;
 
+static void	print_link(char *path)
+{
+	char	tmp[4096 + 1];
+
+	ft_bzero(tmp, 4096 + 1);
+	readlink(path, tmp, 4096);
+	ft_printf(" -> %s", tmp);
+}
+
 static int8_t	print_mode(mode_t mode)
 {
 	int	bits;
@@ -97,7 +106,7 @@ static int8_t	print_time(t_ls *file)
 		if (d_first) {
 			ft_printf(" %2.2s %3.3s  %4.4s", DAY, MONTH, YEAR);
 		} else {
-			ft_printf(" %3.3s %2.2s %4.4s", MONTH, DAY, YEAR);
+			ft_printf(" %3.3s %2.2s  %4.4s", MONTH, DAY, YEAR);
 		}
 	}
 	else {
@@ -126,6 +135,8 @@ int8_t		print_long(t_ls *file, int *padding)
 	ft_printf("%*lld", padding[3], file->statinfo.st_size);
 	print_time(file);
 	ft_printf(" %s", file->name);
+	if (S_ISLNK(file->statinfo.st_mode))
+		print_link(file->path);
 	return (0);
 }
 

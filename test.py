@@ -4,6 +4,7 @@ import shutil
 import unittest
 import shlex
 
+# testdirectory = '/Users/jibrankalia/tmp/ls-test'
 testdirectory = '/tmp/ls-test'
 
 def buildEnv(directory=testdirectory):
@@ -21,7 +22,7 @@ def setupEnv(command, directory=testdirectory):
     except FileNotFoundError:
         buildEnv()
 
-def mainLS(args, directory=testdirectory):
+def mainLS(args):
     allArgs = shlex.split('/bin/ls ' + args + ' ' + testdirectory)
     lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
     return (lsreturn.stdout.decode())
@@ -46,17 +47,18 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def testSimple3(self):
+        setupEnv('mkdir - dir')
+        args = '-lr'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
     def testSimple2(self):
         setupEnv('touch test')
         args = '-lr'
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
-    def testSimple3(self):
-        setupEnv('mkdir - dir')
-        args = '-lr'
-        expected = mainLS(args)
-        self.assertEqual(testLS(args), expected)
 
     def test_07_test_opt_t_0(self):
         setupEnv("touch -t 201312101830.55 a")
@@ -91,14 +93,29 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
-    @unittest.skip("Not handling symbolic paths")
+    def test_08_test_opt_l_4(self):
+        args = "-la dir"
+        setupEnv("mkdir -p dir/.hdir")
+        setupEnv("touch dir/.hdir/file")
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    def test_08_test_opt_l_5(self):
+        args = "-l"
+        setupEnv("touch .a")
+        setupEnv("dd bs=2 count=14450 if=/dev/random of=.a  >/dev/null 2>&1")
+        setupEnv("ln -s .a b")
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+
+    @unittest.skip("-r-sr-xr-x Random s")
     def test_sys_00_test_user_bin(self):
         args = '-lR /usr/bin'
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
 def uniqueEnv():
-    print("Env made")
     currentdir = "/Users/jibrankalia/project_ls/my_ls/test"
     buildEnv(currentdir)
     setupEnv("touch C", currentdir)

@@ -67,8 +67,7 @@ int8_t			ls_printcol(t_arr *files)
 				base += col->numrow;
 			if (base >= col->file_count)
 				break;
-			while ((col->cnt = ((col->chcnt + col->tabwidth) & ~(col->tabwidth - 1)))
-					<= col->endcol)
+			while ((col->cnt = ((col->chcnt + col->tabwidth) & ~(col->tabwidth - 1))) <= col->endcol)
 			{
 				if (col->sortacross && column + 1 >= col->numcol)
 					break;
