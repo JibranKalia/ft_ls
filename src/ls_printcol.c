@@ -18,7 +18,6 @@ extern t_ls_data	g_data;
 static void		get_col_info(t_ls **tmp, t_col *col)
 {
 	int			i;
-	char		*p;
 
 	col->max_len = 0;
 	col->tabwidth = 8;

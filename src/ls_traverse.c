@@ -71,6 +71,9 @@ static int8_t	create_arr(t_arr **naf, t_arr **dir, t_arr **fil)
 
 static int8_t	handle_arr(t_arr *naf, t_arr *dir, t_arr *fil)
 {
+	bool handleDOT = true;
+	if (dir->end == 0 && (naf->end > 0 || fil->end > 0))
+		handleDOT = false;
 	if (naf->end > 0)
 		handle_naf(naf);
 	if (fil->end > 0)
@@ -78,7 +81,7 @@ static int8_t	handle_arr(t_arr *naf, t_arr *dir, t_arr *fil)
 	// Unique case where there is a naf and only one dir. The name of dir has to be printed
 	if (naf->end > 0 && dir->end == 1)
 		ft_printf("%s:\n", ((t_ls *)dir->contents[0])->path);
-	handle_dir(dir);
+	handle_dir(dir, naf->end, fil->end);
 	arr_del(dir);
 	arr_del(naf);
 	arr_del(fil);
@@ -105,16 +108,19 @@ int8_t			ls_traverse(int i, int argc, char **argv)
 		if (stat(argv[i], &tmp->statinfo) == -1)
 		{
 			DEBUG("NAF");
+			tmp->parameter_type = enum_naf;
 			arr_push(naf, tmp);
 		}
 		else if (S_ISDIR(tmp->statinfo.st_mode))
 		{
 			DEBUG("DIR");
+			tmp->parameter_type = enum_dir;
 			arr_push(dir, tmp);
 		}
 		else
 		{
 			DEBUG("FILE");
+			tmp->parameter_type = enum_fil;
 			arr_push(fil, tmp);
 		}
 		++i;

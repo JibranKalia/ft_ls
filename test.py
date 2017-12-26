@@ -123,13 +123,10 @@ class TestLSCompare(unittest.TestCase):
         self.assertEqual(testLS(args), expected)
 
 def uniqueEnv():
-        currentdir = "/Users/jibrankalia/project_ls/test"
-        buildEnv(currentdir)
-        setupEnv("touch C", currentdir)
-        setupEnv("touch -t 201212101830.55 c", currentdir)
-        setupEnv("mkdir -p sbox sbox1", currentdir)
-        setupEnv("touch -t 201312101830.55 B", currentdir)
-        setupEnv("touch -t 201312101830.55 a", currentdir)
+    currentdir = "/Users/jibrankalia/project_ls/test"
+    cleanEnv(currentdir)
+    buildEnv(currentdir)
+    setupEnv("touch aaa", currentdir)
 
 if __name__ == '__main__':
     #uniqueEnv()

@@ -119,7 +119,7 @@ static int8_t	print_time(t_ls *file)
 	return (0);
 }
 
-int8_t		print_long(t_ls *file, int *padding)
+int8_t		print_details(t_ls *file, int *padding)
 {
 	struct passwd	*pwd;
 	struct group	*group;
@@ -140,6 +140,33 @@ int8_t		print_long(t_ls *file, int *padding)
 	return (0);
 }
 
+
+int8_t			dir_print(t_arr *files, int blocks, int *padding) 
+{
+	int i;
+	ft_printf("total %d\n", blocks);
+	i = -1;
+	while (++i < files->end)
+	{
+		print_details((t_ls *)files->contents[i], padding);
+		write(1, "\n", 1);
+	}
+	return (0);
+}
+
+int8_t			fil_print(t_arr *files, int *padding)
+{
+	int i;
+	i = -1;
+	while (++i < files->end)
+	{
+		print_details((t_ls *)files->contents[i], padding);
+		if (i < (files->end - 1))
+			write(1, "\n", 1);
+	}
+	return (0);
+}
+
 int8_t			ls_printlong(t_arr *files)
 {
 	int		i;
@@ -155,12 +182,10 @@ int8_t			ls_printlong(t_arr *files)
 		find_padding(padding, ((t_ls *)files->contents[i])->statinfo);
 		blocks += ((t_ls *)files->contents[i])->statinfo.st_blocks;
 	}
-	ft_printf("total %d\n", blocks);
-	i = -1;
-	while (++i < files->end)
-	{
-		print_long((t_ls *)files->contents[i], padding);
-		write(1, "\n", 1);
+	if (((t_ls *)files->contents[0])->parameter_type == enum_dir) {
+		dir_print(files, blocks, padding);
+	} else {
+		fil_print(files, padding);
 	}
 	return (0);
 }

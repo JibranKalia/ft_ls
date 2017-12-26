@@ -18,6 +18,7 @@
 # include <grp.h>
 # include <libft.h>
 # include <pwd.h>
+# include <stdbool.h>
 # include <sys/xattr.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -29,6 +30,8 @@ typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 typedef struct timespec	t_timespec;
 typedef int8_t	(*PRINTLS)(t_arr *);
+enum parameter_type {enum_dir, enum_fil, enum_naf};
+
 
 /**
 ** The -c and -u options override each other.
@@ -142,6 +145,7 @@ typedef struct			s_ls
 {
 	char				*path;
 	char				*name;
+	int					parameter_type;
 	t_stat				statinfo;
 	t_timespec			lstime;
 }						t_ls;
@@ -164,7 +168,7 @@ int8_t					ls_traverse(int i, int argc, char **argv);
 ** LS_HANDLEDIR
 */
 
-int8_t			handle_dir(t_arr *dir);
+int8_t			handle_dir(t_arr *dir, int naf_len, int fil_len);
 
 /*
 ** LS_PRINTCOL

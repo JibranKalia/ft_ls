@@ -64,7 +64,6 @@ static int8_t	print_dir(char *path)
 {
 	t_arr		*files;
 	int		i;
-	t_ls	**tmp;
 
 	files = arr_create(sizeof(t_ls), 5);
 	MEMCHECK(files);
@@ -79,11 +78,16 @@ static int8_t	print_dir(char *path)
 	return (0);
 }
 
-int8_t			handle_dir(t_arr *dir)
+/**
+ * Handle Dir needs the lenghts of naf and fil to determine whether to go into dot
+ * 
+*/
+
+int8_t			handle_dir(t_arr *dir, int naf_len, int fil_len)
 {
 	int		i;
 
-	if (dir->end == 0)
+	if (dir->end == 0 && fil_len == 0 && naf_len == 0)
 	{
 		DEBUG("HANDLE DIR DOT");
 		print_dir(".");

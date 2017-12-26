@@ -21,7 +21,6 @@ static int8_t	parse(int argc, char **argv)
 	int		i;
 	int		j;
 
-	int notused;
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
 		{
@@ -55,8 +54,6 @@ static int8_t	parse(int argc, char **argv)
 
 int				main(int argc, char **argv)
 {
-	char *p;
-
 	if (isatty(STDOUT_FILENO))
 	{
 		g_data.termwidth = 80;
