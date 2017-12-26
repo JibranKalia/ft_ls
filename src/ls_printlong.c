@@ -119,7 +119,11 @@ static int8_t	print_time(t_ls *file)
 	return (0);
 }
 
-int8_t		print_details(t_ls *file, int *padding)
+
+/**
+ * print_name is path / name depending on whether it is file or dir
+ */
+int8_t		print_details(t_ls *file, int *padding, char *print_name)
 {
 	struct passwd	*pwd;
 	struct group	*group;
@@ -134,7 +138,7 @@ int8_t		print_details(t_ls *file, int *padding)
 	write(1, "  ", 2);
 	ft_printf("%*lld", padding[3], file->statinfo.st_size);
 	print_time(file);
-	ft_printf(" %s", file->name);
+	ft_printf(" %s", print_name);
 	if (S_ISLNK(file->statinfo.st_mode))
 		print_link(file->path);
 	return (0);
@@ -143,12 +147,13 @@ int8_t		print_details(t_ls *file, int *padding)
 
 int8_t			dir_print(t_arr *files, int blocks, int *padding) 
 {
+	DEBUG("PRINT LONG - DIR PRINT");
 	int i;
 	ft_printf("total %d\n", blocks);
 	i = -1;
 	while (++i < files->end)
 	{
-		print_details((t_ls *)files->contents[i], padding);
+		print_details((t_ls *)files->contents[i], padding, ((t_ls *)files->contents[i])->name);
 		write(1, "\n", 1);
 	}
 	return (0);
@@ -156,11 +161,12 @@ int8_t			dir_print(t_arr *files, int blocks, int *padding)
 
 int8_t			fil_print(t_arr *files, int *padding)
 {
+	DEBUG("PRINT LONG - FIL PRINT");
 	int i;
 	i = -1;
 	while (++i < files->end)
 	{
-		print_details((t_ls *)files->contents[i], padding);
+		print_details((t_ls *)files->contents[i], padding, ((t_ls *)files->contents[i])->path);
 		write(1, "\n", 1);
 	}
 	return (0);
