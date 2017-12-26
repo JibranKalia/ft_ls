@@ -107,21 +107,6 @@ class TestLSCompare(unittest.TestCase):
         mine = testLS(args)
         self.assertEqual(mine, expected)
 
-    @unittest.skip("Dev Null Output is annoying")
-    def test_08_test_opt_l_5(self):
-        args = "-l"
-        setupEnv("touch .a")
-        setupEnv("dd bs=2 count=14450 if=/dev/random of=.a  >/dev/null 2>&1")
-        setupEnv("ln -s .a b")
-        expected = mainLS(args)
-        self.assertEqual(testLS(args), expected)
-
-    @unittest.skip("-r-sr-xr-x Random s")
-    def test_sys_00_test_user_bin(self):
-        args = '-lR /usr/bin'
-        expected = mainLS(args)
-        self.assertEqual(testLS(args), expected)
-
     def test_13_test_hyphen_hard_1(self): 
         setupEnv("touch - file")
         args = "-1"
@@ -137,6 +122,21 @@ class TestLSCompare(unittest.TestCase):
     def test_13_test_hyphen_hard_3(self): 
         setupEnv("touch - file")
         args = "-1 --"
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    @unittest.skip("Dev Null Output is annoying")
+    def test_08_test_opt_l_5(self):
+        args = "-l"
+        setupEnv("touch .a")
+        setupEnv("dd bs=2 count=14450 if=/dev/random of=.a  >/dev/null 2>&1")
+        setupEnv("ln -s .a b")
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    @unittest.skip("-r-sr-xr-x Random s")
+    def test_sys_00_test_user_bin(self):
+        args = '-lR /usr/bin'
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 

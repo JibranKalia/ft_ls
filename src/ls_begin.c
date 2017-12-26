@@ -24,8 +24,8 @@ static int8_t	parse(int argc, char **argv)
 	i = 1;
 	while (i < argc && argv[i][0] == '-')
 		{
-		// Double hyphen
-		if (argv[i][1] == '-'){
+		// Double hyphen. insure its not --a
+		if (argv[i][1] == '-' && argv[i][2] == 0){
 			++i;
 			break;
 		}

@@ -33,7 +33,7 @@ static int8_t	handle_flag_5(int c)
 	else if (c == 's')
 		g_ls_flg.size = 1;
 	else
-		return (ls_usage(0));
+		return (ls_usage(c));
 	return (0);
 }
 
@@ -148,6 +148,7 @@ int8_t			handle_flag_1(int c)
 
 int8_t			handle_flag(int c)
 {
+	DEBUG("HANDLE FLAG");
 	if (c == '1')
 	{
 		g_ls_flg.singlecol = 1;

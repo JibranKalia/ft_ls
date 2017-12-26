@@ -38,8 +38,8 @@ static void		print_custom_l(t_arr *fil)
 static void		handle_files(t_arr *fil)
 {
 	DEBUG("HANDLE FILES");
-	if (fil->end > 0)
-		ls_sort(fil);
+	
+	ls_sort(fil);
 	g_printfcn(fil);
 }
 
@@ -74,6 +74,7 @@ static int8_t	handle_arr(t_arr *naf, t_arr *dir, t_arr *fil)
 		handle_naf(naf);
 	if (fil->end > 0)
 		handle_files(fil);
+	// Add space between fil and dir when needed
 	if (fil->end > 0 && dir->end > 0)
 		write(1, "\n", 1);
 	// Unique case where there is a naf and only one dir. The name of dir has to be printed

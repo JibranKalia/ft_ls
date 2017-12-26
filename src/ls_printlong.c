@@ -181,7 +181,7 @@ int8_t			ls_printlong(t_arr *files)
 		find_padding(padding, ((t_ls *)files->contents[i])->statinfo);
 		blocks += ((t_ls *)files->contents[i])->statinfo.st_blocks;
 	}
-	if (((t_ls *)files->contents[0])->parameter_type == enum_dir) {
+	if (files->end > 0 && ((t_ls *)files->contents[0])->parameter_type == enum_dir) {
 		dir_print(files, blocks, padding);
 	} else {
 		fil_print(files, padding);

@@ -25,7 +25,7 @@ int8_t		ls_usage(char flag)
 {
 	if (flag != 0)
 		ft_dprintf(2 , "ls: illegal option -- %c\n", flag);
-	ft_dprintf(STDOUT_FILENO, "usage: ft_ls [-Ralrt] [file ...]\n");
+	ft_dprintf(STDOUT_FILENO, "usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
 	//ft_dprintf(2 ,"usage: ls [-ABCFGHLOPRSTUWabcdefghiklmnopqrstuwx1] [file ...]\n");
 	return (-1);
 }

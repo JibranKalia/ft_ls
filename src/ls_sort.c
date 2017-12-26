@@ -79,7 +79,7 @@ void			ls_sort(t_arr *files)
 		ft_qsort(files->contents, 0, ARR_COUNT(files) - 1, ls_timecmp);
 	else
 		ft_qsort(files->contents, 0, ARR_COUNT(files) - 1, ls_namecmp);
-	if (g_ls_flg.reversesort == 1)
+	if (g_ls_flg.reversesort == 1 && ((t_ls *)files->contents[0])->parameter_type != enum_naf)
 		arr_reverse(files);
 }
 
