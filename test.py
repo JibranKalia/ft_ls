@@ -125,6 +125,14 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def test_21_test_symlink_1(self): 
+        setupEnv("mkdir a")
+        setupEnv("ln -s a b")
+        setupEnv("rm -rf a")
+        args = "-1 b"
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
     @unittest.skip("Dev Null Output is annoying")
     def test_08_test_opt_l_5(self):
         args = "-l"

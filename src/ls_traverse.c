@@ -104,7 +104,7 @@ int8_t			ls_traverse(int i, int argc, char **argv)
 		MEMCHECK(tmp);
 		tmp->path = ft_strdup(argv[i]);
 		tmp->name = ft_strdup(get_basename(argv[i]));
-		if (stat(argv[i], &tmp->statinfo) == -1)
+		if (lstat(argv[i], &tmp->statinfo) == -1)
 		{
 			DEBUG("NAF");
 			tmp->parameter_type = enum_naf;
