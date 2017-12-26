@@ -63,14 +63,13 @@ static inline void	ls_recursive(t_arr *files)
 static int8_t	print_dir(char *path)
 {
 	t_arr		*files;
-	int		i;
-
+	DEBUG("PRINT DIR");
 	files = arr_create(sizeof(t_ls), 5);
 	MEMCHECK(files);
 	files->del = &file_del;
 	get_dir(files, path);
-	i = -1;
-	ls_sort(files);
+	if (files->end > 0)
+		ls_sort(files);
 	g_printfcn(files);
 	if (g_ls_flg.recursive == 1)
 		ls_recursive(files);

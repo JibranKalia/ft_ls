@@ -54,6 +54,13 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def test_06_test_opt_rR(self):
+        setupEnv('mkdir -p .a .b .c && mkdir -p a b c')
+        args = '-1rR'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+
     def testSimple2(self):
         setupEnv('touch test')
         args = '-lr'

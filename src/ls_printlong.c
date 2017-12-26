@@ -46,20 +46,30 @@ static int8_t	print_mode(mode_t mode)
 	return (0);
 }
 
-static int8_t	print_permission(mode_t mode)
+static void		print_sorx_user(mode_t mode)
 {
-	write(1, (mode & S_IRUSR) ? "r" : "-", 1);
-	write(1, (mode & S_IWUSR) ? "w" : "-", 1);
 	if (mode & S_ISUID)
 		write(1, (mode & S_IXUSR) ? "s" : "S", 1);
 	else
 		write(1, (mode & S_IXUSR) ? "x" : "-", 1);
-	write(1, (mode & S_IRGRP) ? "r" : "-", 1);
-	write(1, (mode & S_IWGRP) ? "w" : "-", 1);
+}
+
+static void		print_sorx_group(mode_t mode)
+{
 	if (mode & S_ISGID)
 		write(1, (mode & S_IXGRP) ? "s" : "S", 1);
 	else
 		write(1, (mode & S_IXGRP) ? "x" : "-", 1);
+}
+
+static int8_t	print_permission(mode_t mode)
+{
+	write(1, (mode & S_IRUSR) ? "r" : "-", 1);
+	write(1, (mode & S_IWUSR) ? "w" : "-", 1);
+	print_sorx_user(mode);
+	write(1, (mode & S_IRGRP) ? "r" : "-", 1);
+	write(1, (mode & S_IWGRP) ? "w" : "-", 1);
+	print_sorx_group(mode);
 	write(1, (mode & S_IROTH) ? "r" : "-", 1);
 	write(1, (mode & S_IWOTH) ? "w" : "-", 1);
 	if (mode & S_ISVTX)
