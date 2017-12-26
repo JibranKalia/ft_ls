@@ -98,6 +98,7 @@ int8_t			handle_dir(t_arr *dir)
 	i = 0;
 	while (i < dir->end)
 	{
+		ls_sort(dir);
 		DEBUG("HANDLE DIR %d", dir->end);
 		ft_printf("%s:\n", ((t_ls *)dir->contents[i])->name);
 		print_dir(((t_ls *)dir->contents[i])->path);

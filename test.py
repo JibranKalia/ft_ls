@@ -5,7 +5,8 @@ import unittest
 import shlex
 
 # testdirectory = '/Users/jibrankalia/tmp/ls-test'
-testdirectory = '/tmp/ls-test'
+# testdirectory = '/tmp/ls-test'
+testdirectory = '~/tmp/ls-test'
 
 def buildEnv(directory=testdirectory):
     if not os.path.exists(directory):
@@ -23,13 +24,13 @@ def setupEnv(command, directory=testdirectory):
         buildEnv()
 
 def mainLS(args):
-    allArgs = shlex.split('/bin/ls ' + args + ' ' + testdirectory)
-    lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    allArgs = shlex.split('/bin/ls ' + args)
+    lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=testdirectory)
     return (lsreturn.stdout.decode())
     
 def testLS(args, directory=testdirectory):
-    allArgs = shlex.split(os.getcwd() + '/ft_ls ' + args + ' ' + testdirectory)
-    lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+    allArgs = shlex.split(os.getcwd() + '/ft_ls ' + args)
+    lsreturn = subprocess.run(allArgs, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, cwd=testdirectory)
     return (lsreturn.stdout.decode())
 
 class TestLSCompare(unittest.TestCase):
@@ -58,7 +59,6 @@ class TestLSCompare(unittest.TestCase):
         args = '-lr'
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
-
 
     def test_07_test_opt_t_0(self):
         setupEnv("touch -t 201312101830.55 a")
@@ -94,12 +94,20 @@ class TestLSCompare(unittest.TestCase):
         self.assertEqual(testLS(args), expected)
 
     def test_08_test_opt_l_4(self):
-        args = "-la dir"
         setupEnv("mkdir -p dir/.hdir")
         setupEnv("touch dir/.hdir/file")
+        args = "-la dir"
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def test_11_test_single_file_1(self):
+        setupEnv("touch aaa")
+        args = "-l aaa"
+        expected = mainLS(args)
+        mine = testLS(args)
+        self.assertEqual(mine, expected)
+
+    @unittest.skip("Dev Null Output is annoying")
     def test_08_test_opt_l_5(self):
         args = "-l"
         setupEnv("touch .a")
@@ -108,7 +116,6 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
-
     @unittest.skip("-r-sr-xr-x Random s")
     def test_sys_00_test_user_bin(self):
         args = '-lR /usr/bin'
@@ -116,13 +123,13 @@ class TestLSCompare(unittest.TestCase):
         self.assertEqual(testLS(args), expected)
 
 def uniqueEnv():
-    currentdir = "/Users/jibrankalia/project_ls/my_ls/test"
-    buildEnv(currentdir)
-    setupEnv("touch C", currentdir)
-    setupEnv("touch -t 201212101830.55 c", currentdir)
-    setupEnv("mkdir -p sbox sbox1", currentdir)
-    setupEnv("touch -t 201312101830.55 B", currentdir)
-    setupEnv("touch -t 201312101830.55 a", currentdir)
+        currentdir = "/Users/jibrankalia/project_ls/test"
+        buildEnv(currentdir)
+        setupEnv("touch C", currentdir)
+        setupEnv("touch -t 201212101830.55 c", currentdir)
+        setupEnv("mkdir -p sbox sbox1", currentdir)
+        setupEnv("touch -t 201312101830.55 B", currentdir)
+        setupEnv("touch -t 201312101830.55 a", currentdir)
 
 if __name__ == '__main__':
     #uniqueEnv()

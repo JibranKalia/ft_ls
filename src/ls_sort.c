@@ -55,6 +55,7 @@ static inline void	which_time(void *a, void *b)
 
 int				ls_namecmp(void *a, void *b)
 {
+	DEBUG("USING NAMECMP");
 	return (ft_strcmp(((t_ls *)(a))->path, ((t_ls *)(b))->path));
 }
 
@@ -62,10 +63,11 @@ static int		ls_timecmp(void *a, void *b)
 {
 	double		diff;
 
+	DEBUG("USING TIMECMP");
 	which_time(a, b);
 	diff = timespec_diff(&((t_ls *)(a))->lstime, &((t_ls *)(b))->lstime);
 	if (diff == 0)
-			return (ft_strcmp(((t_ls *)(a))->path, ((t_ls *)(b))->path));
+			return (ls_namecmp(a, b));
 	return ((diff) > 0 ? 1 : -1);
 }
 
