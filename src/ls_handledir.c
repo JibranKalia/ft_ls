@@ -104,7 +104,7 @@ int8_t			handle_dir(t_arr *dir, int naf_len, int fil_len)
 	{
 		ls_sort(dir);
 		DEBUG("HANDLE DIR %d", dir->end);
-		ft_printf("%s:\n", ((t_ls *)dir->contents[i])->name);
+		ft_printf("%s:\n", ((t_ls *)dir->contents[i])->path);
 		print_dir(((t_ls *)dir->contents[i])->path);
 		if ((++i) < dir->end)
 			write(1, "\n", 1);
