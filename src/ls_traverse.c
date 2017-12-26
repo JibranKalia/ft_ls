@@ -110,7 +110,10 @@ int8_t			ls_traverse(int i, int argc, char **argv)
 			tmp->parameter_type = enum_naf;
 			arr_push(naf, tmp);
 		}
-		else if (S_ISDIR(tmp->statinfo.st_mode))
+		// else if (!(S_ISLNK(tmp->statinfo.st_mode) && g_ls_flg.longform) &&
+		// 	stat(tmp->path, &tmp->statinfo) != 1 &&
+		// 	S_ISDIR(tmp->statinfo.st_mode))
+		else if (stat(tmp->path, &tmp->statinfo) != 1 && S_ISDIR(tmp->statinfo.st_mode))
 		{
 			DEBUG("DIR");
 			tmp->parameter_type = enum_dir;

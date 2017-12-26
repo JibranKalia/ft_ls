@@ -133,6 +133,14 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def test_21_test_symlink_2(self):
+        setupEnv("mkdir mydir")
+        setupEnv("ln -s mydir symdir")
+        setupEnv("touch mydir/file1 mydir/file1 mydir/file2 mydir/file3 mydir/file4 mydir/file5 ")
+        args = "-1 symdir"
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
     @unittest.skip("Dev Null Output is annoying")
     def test_08_test_opt_l_5(self):
         args = "-l"
