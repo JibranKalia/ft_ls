@@ -152,6 +152,12 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def test_25_perm_special_bits(self):
+        setupEnv("touch file2 && chmod 1777 file2")
+        args = "-l"
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
     @unittest.skip("Dev Null Output is annoying")
     def test_08_test_opt_l_5(self):
         args = "-l"
@@ -161,7 +167,6 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
-    @unittest.skip("-r-sr-xr-x Random s")
     def test_sys_00_test_user_bin(self):
         args = '-lR /usr/bin'
         expected = mainLS(args)
