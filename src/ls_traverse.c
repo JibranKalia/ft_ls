@@ -41,7 +41,6 @@ static void		handle_files(t_arr *fil)
 	if (fil->end > 0)
 		ls_sort(fil);
 	g_printfcn(fil);
-	ft_printf("\n");
 }
 
 static void		handle_naf(t_arr *naf)
@@ -71,13 +70,12 @@ static int8_t	create_arr(t_arr **naf, t_arr **dir, t_arr **fil)
 
 static int8_t	handle_arr(t_arr *naf, t_arr *dir, t_arr *fil)
 {
-	bool handleDOT = true;
-	if (dir->end == 0 && (naf->end > 0 || fil->end > 0))
-		handleDOT = false;
 	if (naf->end > 0)
 		handle_naf(naf);
 	if (fil->end > 0)
 		handle_files(fil);
+	if (fil->end > 0 && dir->end > 0)
+		write(1, "\n", 1);
 	// Unique case where there is a naf and only one dir. The name of dir has to be printed
 	if (naf->end > 0 && dir->end == 1)
 		ft_printf("%s:\n", ((t_ls *)dir->contents[0])->path);

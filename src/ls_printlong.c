@@ -161,8 +161,7 @@ int8_t			fil_print(t_arr *files, int *padding)
 	while (++i < files->end)
 	{
 		print_details((t_ls *)files->contents[i], padding);
-		if (i < (files->end - 1))
-			write(1, "\n", 1);
+		write(1, "\n", 1);
 	}
 	return (0);
 }

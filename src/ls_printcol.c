@@ -89,7 +89,8 @@ int8_t				ls_printscol(t_arr *files)
 	DEBUG("PRINT S COL");
 	tmp = (t_ls **)files->contents;
 	i = -1;
-	while (++i < files->end)
+	while (++i < files->end) {
 		ft_printf("%s\n", tmp[i]->name);
+	}
 	return (0);
 }

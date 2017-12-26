@@ -122,12 +122,29 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def test_13_test_hyphen_hard_1(self): 
+        setupEnv("touch - file")
+        args = "-1"
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    def test_13_test_hyphen_hard_2(self): 
+        setupEnv("touch - file")
+        args = "-1 -"
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    def test_13_test_hyphen_hard_3(self): 
+        setupEnv("touch - file")
+        args = "-1 --"
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
 def uniqueEnv():
     currentdir = "/Users/jibrankalia/project_ls/test"
-    cleanEnv(currentdir)
     buildEnv(currentdir)
-    setupEnv("touch aaa", currentdir)
+    setupEnv("touch - file", currentdir)
 
 if __name__ == '__main__':
-    #uniqueEnv()
+    uniqueEnv()
     unittest.main()
