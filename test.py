@@ -165,6 +165,17 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def test_sys_00_test_user_bin(self):
+        args = '-lR /usr/bin'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    @unittest.skip("Dev Null Output is annoying")
+    def test_sys_01_test_dev(self):
+        args = '-1l /dev | grep -v io8 | grep -v autofs_nowait | sed -E \"s/ +/ /g\"'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
     @unittest.skip("Dev Null Output is annoying")
     def test_08_test_opt_l_5(self):
         args = "-l"
@@ -174,10 +185,6 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
-    def test_sys_00_test_user_bin(self):
-        args = '-lR /usr/bin'
-        expected = mainLS(args)
-        self.assertEqual(testLS(args), expected)
 
 def uniqueEnv():
     currentdir = "/Users/jibrankalia/project_ls/test"
