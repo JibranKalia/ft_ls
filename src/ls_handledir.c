@@ -35,6 +35,7 @@ static int8_t		get_dir(t_arr *files, char *path)
 		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
 		tmp->name = ft_strdup(dp->d_name);
 		chk = lstat(tmp->path, &tmp->statinfo);
+		tmp->parameter_type = (S_ISDIR(tmp->statinfo.st_mode)) ? enum_dir : enum_fil;
 		CHECK2(chk == -1, closedir(dirp), arr_del(files), RETURN(-1), "lstat Failed");
 		arr_push(files, tmp);
 	}
@@ -85,7 +86,6 @@ static int8_t	print_dir(char *path)
 int8_t			handle_dir(t_arr *dir, int naf_len, int fil_len)
 {
 	int		i;
-
 	if (dir->end == 0 && fil_len == 0 && naf_len == 0)
 	{
 		DEBUG("HANDLE DIR DOT");

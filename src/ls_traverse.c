@@ -35,15 +35,14 @@ static void		print_custom_l(t_arr *fil)
 }
 **/
 
-static void		handle_files(t_arr *fil)
+void		handle_files(t_arr *fil)
 {
 	DEBUG("HANDLE FILES");
-	
 	ls_sort(fil);
 	g_printfcn(fil);
 }
 
-static void		handle_naf(t_arr *naf)
+void		handle_naf(t_arr *naf)
 {
 	int		i;
 
@@ -112,7 +111,7 @@ int8_t			ls_traverse(int i, int argc, char **argv)
 		}
 		else if (!(S_ISLNK(tmp->statinfo.st_mode) && g_ls_flg.longform) &&
 			stat(tmp->path, &tmp->statinfo) != 1 &&
-			S_ISDIR(tmp->statinfo.st_mode))
+			S_ISDIR(tmp->statinfo.st_mode) && g_ls_flg.listdir == 0)
 		{
 			DEBUG("DIR");
 			tmp->parameter_type = enum_dir;

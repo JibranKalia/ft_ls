@@ -30,7 +30,7 @@ typedef struct dirent	t_dir;
 typedef struct stat		t_stat;
 typedef struct timespec	t_timespec;
 typedef int8_t	(*PRINTLS)(t_arr *);
-enum parameter_type {enum_dir, enum_fil, enum_naf};
+enum parameter_type {enum_naf, enum_fil, enum_dir};
 
 
 /**
@@ -145,7 +145,7 @@ typedef struct			s_ls
 {
 	char				*path;
 	char				*name;
-	int					parameter_type;
+	unsigned int		parameter_type;
 	t_stat				statinfo;
 	t_timespec			lstime;
 }						t_ls;
