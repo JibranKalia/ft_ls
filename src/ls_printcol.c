@@ -60,6 +60,8 @@ int8_t			ls_printcol(t_arr *files)
 		while (++column < col->numcol)
 		{
 			col->chcnt += ft_printf("%s", ((t_ls*)files->contents[base])->name);
+			if (g_ls_flg.slash && ((t_ls*)files->contents[base])->parameter_type == enum_dir)
+				ft_printf("/");
 			if (col->sortacross)
 				base++;
 			else
@@ -90,7 +92,10 @@ int8_t				ls_printscol(t_arr *files)
 	tmp = (t_ls **)files->contents;
 	i = -1;
 	while (++i < files->end) {
-		ft_printf("%s\n", tmp[i]->name);
+		ft_printf("%s", tmp[i]->name);
+		if (g_ls_flg.slash && tmp[i]->parameter_type == enum_dir)
+			ft_printf("/");
+		write(1, "\n", 1);
 	}
 	return (0);
 }

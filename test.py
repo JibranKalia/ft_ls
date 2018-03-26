@@ -17,7 +17,7 @@ def cleanEnv(directory=testdirectory):
 
 def setupEnv(command, directory=testdirectory):
     try:
-        subprocess.run(shlex.split(command), cwd=directory)
+        subprocess.run(shlex.split(command), cwd=directory, shell=False)
     except PermissionError:
         pass
     except FileNotFoundError:
@@ -170,6 +170,22 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
+    def test_bonus_02_test_opt_p_1(self):
+        args = '-1pR'
+        setupEnv("mkdir mydir1 mydir2 && touch mydir1/file1 mydir1/file2 mydir2/file1 mydir2/file2")
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+        
+    def test_bonus_02_test_opt_p_2(self):
+        args = '-1p /usr/bin'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
+    def test_bonus_02_test_opt_p_3(self):
+        args = '-lp /usr/bin'
+        expected = mainLS(args)
+        self.assertEqual(testLS(args), expected)
+
     @unittest.skip("Dev Null Output is annoying")
     def test_sys_01_test_dev(self):
         args = '-1l /dev | grep -v io8 | grep -v autofs_nowait | sed -E \"s/ +/ /g\"'
@@ -185,12 +201,11 @@ class TestLSCompare(unittest.TestCase):
         expected = mainLS(args)
         self.assertEqual(testLS(args), expected)
 
-
 def uniqueEnv():
     currentdir = "/Users/jibrankalia/project_ls/test"
     buildEnv(currentdir)
     setupEnv("touch - file", currentdir)
 
 if __name__ == '__main__':
-    uniqueEnv()
+    #uniqueEnv()
     unittest.main()

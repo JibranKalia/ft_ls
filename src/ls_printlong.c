@@ -158,6 +158,8 @@ int8_t		print_details(t_ls *file, int *padding, char *print_name)
 	ft_printf("%*lld", padding[3], file->statinfo.st_size);
 	print_time(file);
 	ft_printf(" %s", print_name);
+	if (g_ls_flg.slash && file->parameter_type == enum_dir)
+		ft_printf("/");
 	if (S_ISLNK(file->statinfo.st_mode))
 		print_link(file->path);
 	return (0);

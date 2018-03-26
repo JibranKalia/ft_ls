@@ -35,6 +35,8 @@ static int8_t		get_dir(t_arr *files, char *path)
 		ft_asprintf(&tmp->path, "%s/%s", path, dp->d_name);
 		tmp->name = ft_strdup(dp->d_name);
 		chk = lstat(tmp->path, &tmp->statinfo);
+		if (S_ISDIR(tmp->statinfo.st_mode))
+			tmp->parameter_type = enum_dir;
 		CHECK2(chk == -1, closedir(dirp), arr_del(files), RETURN(-1), "lstat Failed");
 		arr_push(files, tmp);
 	}
